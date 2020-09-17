@@ -1,4 +1,4 @@
-package com.amberlight.cloud.discovery;
+package com.amberlight.cloud.registry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class DiscoveryApplication {
+public class RegistryApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DiscoveryApplication.class, args);
+        SpringApplication.run(RegistryApplication.class, args);
     }
 }

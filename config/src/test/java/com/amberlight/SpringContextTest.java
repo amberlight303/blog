@@ -6,7 +6,7 @@ import org.junit.Test;
 //@SpringBootTest(classes = ConfigApplication.class)
 public class SpringContextTest {
 
-    @Test
+//    @Test
     public void whenSpringContextIsBootstrapped_thenNoExceptions() {
     }
 }

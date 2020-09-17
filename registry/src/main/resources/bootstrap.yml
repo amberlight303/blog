@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: registry
+  cloud:
+    config:
+      uri: http://configUser:configPassword@localhost:9091
+#      fail-fast: true
+#
+#      password: configPassword
+#      username: configUser
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false

@@ -9,7 +9,7 @@ import org.junit.Test;
  *
  */
 //@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = DiscoveryApplication.class)
+//@SpringBootTest(classes = RegistryApplication.class)
 public class SpringContextLiveTest {
 
     @Test

@@ -69,11 +69,11 @@ public class LiveTest {
 //    }
 //
 //    @Test
-//    public void whenAdminAccessDiscoveryResource_thenSuccess() {
+//    public void whenAdminAccessRegistryResource_thenSuccess() {
 //        final Response response = RestAssured.given()
 //            .auth()
 //            .form("admin", "admin", formConfig)
-//            .get(ROOT_URI + "/discovery");
+//            .get(ROOT_URI + "/registry");
 //        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 //    }
 //

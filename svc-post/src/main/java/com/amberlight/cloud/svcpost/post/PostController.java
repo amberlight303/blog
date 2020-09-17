@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,16 +37,19 @@ public class PostController {
         return postService.createPost(post);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @DeleteMapping("/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PutMapping("/{postId}")
     public Post updatePost(@RequestBody Post post, @PathVariable Long postId) {
         return postService.updatePost(post, postId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PatchMapping("/{postId}")
     public Post updatePost(@RequestBody Map<String, String> updates, @PathVariable Long postId) {
         return postService.updatePost(updates, postId);
