@@ -29,6 +29,7 @@ public class GatewayApplication {
 
     @Autowired(required = false)
     private List<RibbonClientSpecification> configurations = new ArrayList<>();
+
     @Autowired
     private EurekaClient eurekaClient;
 

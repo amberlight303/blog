@@ -72,7 +72,7 @@ create table roles_privileges (
 ------------------------------------------------------------------------------------------------------------------------
 insert into users_accounts (id, first_name, last_name, email, password, enabled, is_using_2fa)
 values ( (select nextval('users_accounts_id_seq')), 'Nikola', 'Tesla', 'amberlight303@gmail.com',
-         '$2a$11$0WE0P1I48qwdlencv7uloOdv8wiyU0OlhXhjbYPJjZnT1XaCB8klS', true, false);
+         '$2y$11$enDqQYULgbxAWzCrjZ.j7Owl9OAHNpkXZIZJHEyI51ZGB1BCWjQNi', true, false);
 ------------------------------------------------------------------------------------------------------------------------
 insert into roles (id, name)
 values ( (select nextval('roles_id_seq')), 'ROLE_ADMIN');

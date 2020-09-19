@@ -27,11 +27,13 @@ public class PostController {
         return postService.findAllPosts();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping("/{postId}")
     public Post findPost(@PathVariable Long postId) {
         return postService.findPostById(postId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping
     public Post createPost(@RequestBody Post post) {
         return postService.createPost(post);

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: discovery
+  cloud:
+    config:
+      uri: http://localhost:9091
+      fail-fast: true
+      username: configUser
+      password: configPassword
+
+eureka:
+  server:
+    enable-self-preservation: true
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+

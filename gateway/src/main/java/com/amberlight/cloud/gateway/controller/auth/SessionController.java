@@ -8,7 +8,7 @@ public class SessionController {
 
     @RequestMapping("/")
     public String helloAdmin() {
-        return "hello admin";
+        return "hello my brother from another mother :)";
     }
 
 }

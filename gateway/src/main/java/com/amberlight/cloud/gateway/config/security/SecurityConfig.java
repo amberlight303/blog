@@ -27,6 +27,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,56 +57,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DifferentLocationChecker differentLocationChecker;
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("admin")
-//                .password(encoder().encode("password"))
-//                .roles("ADMIN");
-//    }
-
     @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
+    protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
-                        "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
-                        "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
-                        "/user/savePassword*","/updatePassword*", "/user/changePassword*", "/emailError*",
-                        "/resources/**","/old/user/registration*", "/successRegister*","/qrcode*","/user/enableNewLoc*")
-                .permitAll()
-                .antMatchers("/invalidSession*").anonymous()
-                .antMatchers("/user/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
-                .anyRequest().hasAuthority("READ_PRIVILEGE")
-                .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/homepage.html")
-                .failureUrl("/login?error=true")
-                .successHandler(myAuthenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler)
                 .authenticationDetailsSource(authenticationDetailsSource)
-                .permitAll()
+                .and()
+                .authorizeRequests()
+//                .antMatchers("/post-service/**", "/login*", "/").permitAll()
+                .antMatchers("/eureka/**").hasRole("SYSTEM")
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
-                .invalidSessionUrl("/invalidSession.html")
-                .maximumSessions(1).sessionRegistry(sessionRegistry()).and()
-                .sessionFixation().none()
+                .maximumSessions(3)
+                .sessionRegistry(sessionRegistry()).and().sessionFixation().none()
                 .and()
                 .logout()
-                .logoutSuccessHandler(myLogoutSuccessHandler)
-                .invalidateHttpSession(false)
-                .logoutSuccessUrl("/logout.html?logSucc=true")
-                .deleteCookies("JSESSIONID")
+                .deleteCookies("SESSION")
                 .permitAll()
                 .and()
-                .rememberMe().rememberMeServices(rememberMeServices()).key("theKey");
-
-        // @formatter:on
+                .rememberMe().rememberMeServices(rememberMeServices()).key("theKey")
+                .and()
+                .csrf().disable();
     }
+
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -144,39 +119,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name="GeoIPCountry")
     public DatabaseReader databaseReader() throws IOException, GeoIp2Exception {
-        final File resource = new File("src/main/resources/maxmind/GeoLite2-Country.mmdb");
-        return new DatabaseReader.Builder(resource).build();
+        File database = ResourceUtils
+                .getFile("classpath:maxmind/GeoLite2-Country.mmdb");
+        return new DatabaseReader.Builder(database)
+                .build();
     }
-
-
-
-
-    /*
-                FROM OLD SEC CONFIG
-     */
-    //    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//            .withUser("user").password("password").roles("USER")
-//                .and()
-//            .withUser("admin").password("admin").roles("ADMIN");
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            .formLogin()
-//            .defaultSuccessUrl("/home/index.html", true)
-//            .and()
-//        .authorizeRequests()
-//            .antMatchers("/book-service/**", "/rating-service/**", "/login*", "/").permitAll()
-//            .antMatchers("/eureka/**").hasRole("ADMIN")
-//            .anyRequest().authenticated()
-//            .and()
-//        .logout()
-//            .and()
-//        .csrf().disable();
-//    }
-
 
 }

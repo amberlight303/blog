@@ -1,4 +1,6 @@
 spring:
+  session:
+    store-type: none
   application:
     name: config
   cloud:
@@ -17,18 +19,12 @@ spring:
 server:
   port: 9091
 
-#eureka:
-#  instance:
-#    prefer-ip-address: true
-#  client:
-#    serviceUrl:
-#      defaultZone: http://discUser:discPassword@localhost:9092/eureka/
-#    registry-fetch-interval-seconds: 5
-#    region: default
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://discUser:discPassword@localhost:9092/eureka/
 
 
-
-#eureka:
-#  client:
-#    register-with-eureka: false
-#    fetch-registry: false

@@ -28,11 +28,11 @@ public class Post implements Serializable {
     @Column(name = "content")
     private String content;
 
-    public Post() {}
-
-    public Post(Long userId, String title) {
-        this.userId = userId;
-        this.title = title;
-    }
+//    public Post() {}
+//
+//    public Post(Long userId, String title) {
+//        this.userId = userId;
+//        this.title = title;
+//    }
 
 }

@@ -7,15 +7,15 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-@Component
-public class DataLoader implements ApplicationRunner {
+//@Component
+public class DataLoader /*implements ApplicationRunner*/ {
 
-    @Autowired
-    private PostService postService;
+//    @Autowired
+//    private PostService postService;
 
-    @Override
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-//        this.postService.createPost(new Post(1L, "CP2077 news"));
-//        this.postService.createPost(new Post(1L, "\"No Time To Die\" news"));
-    }
+//    @Override
+//    public void run(ApplicationArguments applicationArguments) throws Exception {
+////        this.postService.createPost(new Post(1L, "CP2077 news"));
+////        this.postService.createPost(new Post(1L, "\"No Time To Die\" news"));
+//    }
 }

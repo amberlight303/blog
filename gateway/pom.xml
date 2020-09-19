@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring.boot.starter.data.jpa.version}</version>
+<!--            <version>${spring.boot.starter.data.jpa.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
@@ -28,41 +28,41 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>${spring.boot.starter.data.redis.version}</version>
+<!--            <version>${spring.boot.starter.data.redis.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>${spring.boot.starter.security.version}</version>
+<!--            <version>${spring.boot.starter.security.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <version>${spring.security.test.version}</version>
+<!--            <version>${spring.security.test.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.starter.web.version}</version>
+<!--            <version>${spring.boot.starter.web.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-            <version>${spring.boot.starter.mail.version}</version>
+<!--            <version>${spring.boot.starter.mail.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-bom</artifactId>
             <version>${spring.session.bom.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>${spring.boot.devtools.version}</version>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-devtools</artifactId>-->
+<!--&lt;!&ndash;            <version>${spring.boot.devtools.version}</version>&ndash;&gt;-->
+<!--            <scope>runtime</scope>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -71,13 +71,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>${spring.boot.tomcat.version}</version>
+<!--            <version>${spring.boot.tomcat.version}</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring.boot.test.version}</version>
+<!--            <version>${spring.boot.test.version}</version>-->
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -89,17 +89,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>${spring.boot.starter.thymeleaf.version}</version>
+<!--            <version>${spring.boot.starter.thymeleaf.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <version>${thymeleaf.springsecurity5.version}</version>
+<!--            <version>${thymeleaf.springsecurity5.version}</version>-->
         </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>${thymeleaf.layout.dialect.version}</version>
+<!--            <version>${thymeleaf.layout.dialect.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -155,7 +155,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>${javax.validation.version}</version>
+<!--            <version>${javax.validation.version}</version>-->
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -171,7 +171,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-            <version>${spring.cloud.starter.config.version}</version>
+<!--            <version>${spring.cloud.starter.config.version}</version>-->
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
