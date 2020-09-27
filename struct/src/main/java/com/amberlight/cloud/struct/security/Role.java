@@ -1,15 +1,15 @@
-package com.amberlight.cloud.gateway.auth.persistence.model;
+package com.amberlight.cloud.struct.security;
+
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
-@Table(name = "privileges")
+@Table(name = "roles")
 @Data
-public class Privilege implements Serializable {
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,14 +20,14 @@ public class Privilege implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles;
+//    @ManyToMany(mappedBy = "roles")
+//    private Collection<User> users;
 
-    public Privilege() {
+    public Role() {
         super();
     }
 
-    public Privilege(final String name) {
+    public Role(final String name) {
         super();
         this.name = name;
     }
@@ -41,27 +41,29 @@ public class Privilege implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        Privilege other = (Privilege) obj;
-        if (getName() == null) {
-            if (other.getName() != null)
-                return false;
-        } else if (!getName().equals(other.getName()))
+        }
+        final Role role = (Role) obj;
+        if (!getName().equals(role.getName())) {
             return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Privilege [name=").append(name).append("]").append("[id=").append(id).append("]");
+        builder.append("Role [name=").append(name).append("]").append("[id=").append(id).append("]");
         return builder.toString();
     }
+
 
 }

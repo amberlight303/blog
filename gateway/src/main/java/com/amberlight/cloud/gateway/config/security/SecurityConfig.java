@@ -13,10 +13,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,6 +36,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -59,28 +62,51 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .formLogin()
-                .authenticationDetailsSource(authenticationDetailsSource)
-                .and()
-                .authorizeRequests()
-//                .antMatchers("/post-service/**", "/login*", "/").permitAll()
-                .antMatchers("/eureka/**").hasRole("SYSTEM")
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .maximumSessions(3)
-                .sessionRegistry(sessionRegistry()).and().sessionFixation().none()
-                .and()
-                .logout()
-                .deleteCookies("SESSION")
-                .permitAll()
-                .and()
-                .rememberMe().rememberMeServices(rememberMeServices()).key("theKey")
-                .and()
-                .csrf().disable();
-    }
 
+
+        http
+            .anonymous().disable()
+            .formLogin()
+            .authenticationDetailsSource(authenticationDetailsSource)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/post-service/**", "/login*", "/").permitAll()
+//          .antMatchers("/post-service/**", "/login*", "/").hasAnyRole("ADMIN", "SYSTEM", "USER")
+            .antMatchers("/eureka/**").hasRole("SYSTEM")
+            .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+            .maximumSessions(3)
+            .sessionRegistry(sessionRegistry())
+                .and().sessionFixation().none()
+            .and()
+            .logout()
+            .deleteCookies("SESSION")
+            .permitAll()
+            .and()
+            .rememberMe().rememberMeServices(rememberMeServices()).key("theKey")
+            .and()
+            .csrf().disable();
+
+
+
+//        http
+//                .anonymous().disable() // added
+//                .formLogin()
+////                .authenticationDetailsSource(authenticationDetailsSource) // added
+//                .defaultSuccessUrl("/hello-to-admin", true)
+//                .and()
+//                .authorizeRequests()
+////                .antMatchers("/post-service/**", "/rating-service/**", "/login*", "/").permitAll()
+//                .antMatchers("/post-service/**", "/rating-service/**", "/login*", "/", "/hello-to-admin").hasAnyRole("ADMIN")
+//                .antMatchers("/eureka/**").hasRole("SYSTEM")
+//                .anyRequest().authenticated()
+//                .and()
+//                .logout()
+//                .and()
+//                .csrf().disable();
+
+    }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
@@ -94,11 +120,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
+
         final CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(encoder());
         authProvider.setPostAuthenticationChecks(differentLocationChecker);
         return authProvider;
+
+//        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(encoder());
+////        authProvider.setPostAuthenticationChecks(differentLocationChecker);
+//        return authProvider;
     }
 
     @Bean

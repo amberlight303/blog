@@ -2,7 +2,6 @@ package com.amberlight.cloud.gateway.controller.auth;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.Privilege;
 import com.amberlight.cloud.gateway.auth.persistence.model.Role;
 import com.amberlight.cloud.gateway.auth.security.security.ISecurityUserService;
 import com.amberlight.cloud.gateway.auth.service.IUserService;
@@ -96,18 +95,9 @@ public class RegistrationController {
     // ============== NON-API ============
 
     public void authWithoutPassword(User user) {
-
-        List<Privilege> privileges = user.getRoles()
-                .stream()
-                .map(Role::getPrivileges)
-                .flatMap(Collection::stream)
-                .distinct()
-                .collect(Collectors.toList());
-
-        List<GrantedAuthority> authorities = privileges.stream()
+        List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(p -> new SimpleGrantedAuthority(p.getName()))
                 .collect(Collectors.toList());
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

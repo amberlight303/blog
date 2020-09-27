@@ -18,11 +18,6 @@ create table roles (
     name varchar(32)
 );
 ------------------------------------------------------------------------------------------------------------------------
-create table privileges (
-    id   serial primary key,
-    name varchar(32)
-);
-------------------------------------------------------------------------------------------------------------------------
 create table users_locations (
     id   serial primary key,
     user_id int,
@@ -64,37 +59,17 @@ create table users_roles (
     unique (user_id, role_id)
 );
 ------------------------------------------------------------------------------------------------------------------------
-create table roles_privileges (
-    role_id int,
-    privilege_id int,
-    unique (role_id, privilege_id)
-);
-------------------------------------------------------------------------------------------------------------------------
 insert into users_accounts (id, first_name, last_name, email, password, enabled, is_using_2fa)
 values ( (select nextval('users_accounts_id_seq')), 'Nikola', 'Tesla', 'amberlight303@gmail.com',
          '$2y$11$enDqQYULgbxAWzCrjZ.j7Owl9OAHNpkXZIZJHEyI51ZGB1BCWjQNi', true, false);
 ------------------------------------------------------------------------------------------------------------------------
 insert into roles (id, name)
 values ( (select nextval('roles_id_seq')), 'ROLE_ADMIN');
-------------------------------------------------------------------------------------------------------------------------
-insert into privileges (id, name)
-values ( (select nextval('privileges_id_seq')), 'READ_PRIVILEGE'),
-       ( (select nextval('privileges_id_seq')), 'WRITE_PRIVILEGE');
 
 ------------------------------------------------------------------------------------------------------------------------
 insert into users_roles (user_id, role_id)
 values ( (select id from users_accounts where email = 'amberlight303@gmail.com'),
          (select id from roles where name = 'ROLE_ADMIN')
-       );
-------------------------------------------------------------------------------------------------------------------------
-insert into roles_privileges (role_id, privilege_id)
-values (
-           (select id from roles where name = 'ROLE_ADMIN'),
-           (select id from privileges where name = 'READ_PRIVILEGE')
-       ),
-       (
-           (select id from roles where name = 'ROLE_ADMIN'),
-           (select id from privileges where name = 'WRITE_PRIVILEGE')
        );
 ------------------------------------------------------------------------------------------------------------------------
 

@@ -2,7 +2,6 @@ package com.amberlight.cloud.gateway.auth.security.security;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.Privilege;
 import com.amberlight.cloud.gateway.auth.persistence.dao.UserRepository;
 import com.amberlight.cloud.gateway.auth.persistence.model.Role;
 import com.amberlight.cloud.gateway.auth.persistence.model.User;
@@ -61,28 +60,12 @@ public class MyUserDetailsService implements UserDetailsService {
     // UTIL
 
     private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
-    }
-
-    private List<String> getPrivileges(final Collection<Role> roles) {
-        final List<String> privileges = new ArrayList<>();
-        final List<Privilege> collection = new ArrayList<>();
-        for (final Role role : roles) {
-            collection.addAll(role.getPrivileges());
-        }
-        for (final Privilege item : collection) {
-            privileges.add(item.getName());
-        }
-
-        return privileges;
-    }
-
-    private List<GrantedAuthority> getGrantedAuthorities(final List<String> privileges) {
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        for (final String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
+        for (final Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;
+
     }
 
     private String getClientIP() {

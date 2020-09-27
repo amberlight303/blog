@@ -1,4 +1,4 @@
-package com.amberlight.cloud.svcpost;
+package com.amberlight.cloud.svcpost.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

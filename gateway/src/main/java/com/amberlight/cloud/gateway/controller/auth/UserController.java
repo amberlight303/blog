@@ -26,9 +26,10 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/loggedUsersFromSessionRegistry")
-    public String getLoggedUsersFromSessionRegistry(final Locale locale, final Model model) {
-        model.addAttribute("users", userService.getUsersFromSessionRegistry());
-        return "users";
-    }
+//    @GetMapping("/loggedUsersFromSessionRegistry")
+//    public String getLoggedUsersFromSessionRegistry(final Locale locale, final Model model) {
+//        model.addAttribute("users", userService.getUsersFromSessionRegistry());
+//        return "users";
+//    }
+
 }

@@ -1,12 +1,9 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true
   application:
-    name: gateway
+    name: post-service
   cloud:
     config:
       uri: http://localhost:9091
       fail-fast: true
       username: configUser
       password: configPassword
-

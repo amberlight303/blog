@@ -1,38 +1,45 @@
 package com.amberlight.cloud.svcpost.post;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "posts")
+@Document(collection = "posts")
 @Data
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "preview_text")
     private String previewText;
 
-    @Column(name = "content")
     private String content;
 
-//    public Post() {}
-//
-//    public Post(Long userId, String title) {
-//        this.userId = userId;
-//        this.title = title;
-//    }
+    public Post() {}
 
+    public Post(Long userId, String title, String previewText, String content) {
+        this.userId = userId;
+        this.title = title;
+        this.previewText = previewText;
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", previewText='" + previewText + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

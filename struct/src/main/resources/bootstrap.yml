@@ -1,0 +1,9 @@
+#spring:
+#  application:
+#    name: struct
+#  cloud:
+#    config:
+#      uri: http://localhost:9091
+#      fail-fast: true
+#      username: configUser
+#      password: configPassword

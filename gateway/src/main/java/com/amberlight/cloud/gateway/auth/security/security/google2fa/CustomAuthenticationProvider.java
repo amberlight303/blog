@@ -4,6 +4,7 @@ package com.amberlight.cloud.gateway.auth.security.security.google2fa;
 
 import com.amberlight.cloud.gateway.auth.persistence.dao.UserRepository;
 import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.CustomWebAuthenticationDetails;
 import org.jboss.aerogear.security.otp.Totp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;

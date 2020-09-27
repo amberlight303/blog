@@ -44,8 +44,8 @@ public class UserService implements IUserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private SessionRegistry sessionRegistry;
+//    @Autowired
+//    private SessionRegistry sessionRegistry;
 
     @Autowired
     @Qualifier("GeoIPCountry")
@@ -217,21 +217,21 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email) != null;
     }
 
-    @Override
-    public List<String> getUsersFromSessionRegistry() {
-        return sessionRegistry.getAllPrincipals()
-            .stream()
-            .filter((u) -> !sessionRegistry.getAllSessions(u, false)
-                .isEmpty())
-            .map(o -> {
-                if (o instanceof User) {
-                    return ((User) o).getEmail();
-                } else {
-                    return o.toString()
-            ;
-                }
-            }).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<String> getUsersFromSessionRegistry() {
+//        return sessionRegistry.getAllPrincipals()
+//            .stream()
+//            .filter((u) -> !sessionRegistry.getAllSessions(u, false)
+//                .isEmpty())
+//            .map(o -> {
+//                if (o instanceof User) {
+//                    return ((User) o).getEmail();
+//                } else {
+//                    return o.toString()
+//            ;
+//                }
+//            }).collect(Collectors.toList());
+//    }
 
     @Override
     public NewLocationToken isNewLoginLocation(String username, String ip) {

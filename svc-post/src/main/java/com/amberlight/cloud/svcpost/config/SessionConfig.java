@@ -1,4 +1,4 @@
-package com.amberlight.cloud.gateway.config.security;
+package com.amberlight.cloud.svcpost.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +14,7 @@ import org.springframework.session.web.context.AbstractHttpSessionApplicationIni
 @EnableRedisHttpSession(redisFlushMode = RedisFlushMode.IMMEDIATE)
 public class SessionConfig extends AbstractHttpSessionApplicationInitializer {
 
+//
 //    @Bean
 //    public RedisTemplate<Object, Object> sessionRedisTemplate(
 //            RedisConnectionFactory connectionFactory) {
@@ -24,6 +25,6 @@ public class SessionConfig extends AbstractHttpSessionApplicationInitializer {
 //        template.setConnectionFactory(connectionFactory);
 //        return template;
 //    }
-//
+
 
 }

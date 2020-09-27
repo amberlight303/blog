@@ -1,4 +1,5 @@
-package com.amberlight.cloud.gateway.auth.security.security.google2fa;
+package com.amberlight.cloud.struct.security;
+
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
