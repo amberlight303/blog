@@ -2,9 +2,9 @@ package com.amberlight.cloud.gateway.auth.service;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.DeviceMetadata;
+import com.amberlight.cloud.struct.security.DeviceMetadata;
 import com.amberlight.cloud.gateway.auth.persistence.dao.DeviceMetadataRepository;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.User;
 import com.google.common.base.Strings;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;

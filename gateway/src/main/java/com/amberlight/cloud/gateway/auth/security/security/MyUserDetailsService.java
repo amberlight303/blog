@@ -3,8 +3,8 @@ package com.amberlight.cloud.gateway.auth.security.security;
 
 
 import com.amberlight.cloud.gateway.auth.persistence.dao.UserRepository;
-import com.amberlight.cloud.gateway.auth.persistence.model.Role;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.Role;
+import com.amberlight.cloud.struct.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

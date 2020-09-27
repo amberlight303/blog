@@ -1,7 +1,7 @@
 package com.amberlight.cloud.gateway.auth.registration;
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.User;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;

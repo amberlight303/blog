@@ -4,15 +4,14 @@ package com.amberlight.cloud.gateway.auth.service;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.NewLocationToken;
-import com.amberlight.cloud.gateway.auth.persistence.model.PasswordResetToken;
+import com.amberlight.cloud.struct.security.NewLocationToken;
+import com.amberlight.cloud.struct.security.PasswordResetToken;
 import com.amberlight.cloud.gateway.dto.auth.UserDto;
 import com.amberlight.cloud.gateway.error.auth.UserAlreadyExistException;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
-import com.amberlight.cloud.gateway.auth.persistence.model.VerificationToken;
+import com.amberlight.cloud.struct.security.User;
+import com.amberlight.cloud.struct.security.VerificationToken;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {

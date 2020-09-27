@@ -1,4 +1,4 @@
-package com.amberlight.cloud.gateway.auth.persistence.model;
+package com.amberlight.cloud.struct.security;
 
 import lombok.Data;
 
@@ -8,9 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Table(name = "verification_tokens")
+@Table(name = "passwords_reset_tokens")
 @Data
-public class VerificationToken implements Serializable{
+public class PasswordResetToken implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -30,18 +30,18 @@ public class VerificationToken implements Serializable{
     @Column(name = "expiry_date")
     private Date expiryDate;
 
-    public VerificationToken() {
+    public PasswordResetToken() {
         super();
     }
 
-    public VerificationToken(final String token) {
+    public PasswordResetToken(final String token) {
         super();
 
         this.token = token;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
-    public VerificationToken(final String token, final User user) {
+    public PasswordResetToken(final String token, final User user) {
         super();
 
         this.token = token;
@@ -82,7 +82,7 @@ public class VerificationToken implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VerificationToken other = (VerificationToken) obj;
+        final PasswordResetToken other = (PasswordResetToken) obj;
         if (getExpiryDate() == null) {
             if (other.getExpiryDate() != null) {
                 return false;

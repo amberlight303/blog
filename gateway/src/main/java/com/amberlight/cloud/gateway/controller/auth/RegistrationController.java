@@ -2,10 +2,10 @@ package com.amberlight.cloud.gateway.controller.auth;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.Role;
+import com.amberlight.cloud.struct.security.Role;
 import com.amberlight.cloud.gateway.auth.security.security.ISecurityUserService;
 import com.amberlight.cloud.gateway.auth.service.IUserService;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

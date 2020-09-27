@@ -2,8 +2,8 @@ package com.amberlight.cloud.gateway.auth.persistence.dao;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
-import com.amberlight.cloud.gateway.auth.persistence.model.VerificationToken;
+import com.amberlight.cloud.struct.security.User;
+import com.amberlight.cloud.struct.security.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

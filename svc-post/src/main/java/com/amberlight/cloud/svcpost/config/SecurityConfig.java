@@ -1,6 +1,5 @@
 package com.amberlight.cloud.svcpost.config;
 
-import com.amberlight.cloud.svcpost.security.CustomWebAuthenticationDetailsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,9 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -56,9 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .csrf()
                 .disable()
-                .formLogin()
-                .authenticationDetailsSource(authenticationDetailsSource)
-//                .disable()
         ;
 
 

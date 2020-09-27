@@ -4,8 +4,8 @@ package com.amberlight.cloud.gateway.controller.auth;
 
 import com.amberlight.cloud.gateway.dto.auth.PasswordDto;
 import com.amberlight.cloud.gateway.dto.auth.UserDto;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
-import com.amberlight.cloud.gateway.auth.persistence.model.VerificationToken;
+import com.amberlight.cloud.struct.security.User;
+import com.amberlight.cloud.struct.security.VerificationToken;
 import com.amberlight.cloud.gateway.auth.registration.OnRegistrationCompleteEvent;
 import com.amberlight.cloud.gateway.auth.security.security.ISecurityUserService;
 import com.amberlight.cloud.gateway.auth.service.IUserService;

@@ -2,7 +2,7 @@ package com.amberlight.cloud.gateway.auth.security.security.location;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.NewLocationToken;
+import com.amberlight.cloud.struct.security.NewLocationToken;
 import com.amberlight.cloud.gateway.auth.service.IUserService;
 import com.amberlight.cloud.gateway.error.auth.UnusualLocationException;
 import org.springframework.beans.factory.annotation.Autowired;

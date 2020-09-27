@@ -2,7 +2,7 @@ package com.amberlight.cloud.gateway.auth.persistence.dao;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.DeviceMetadata;
+import com.amberlight.cloud.struct.security.DeviceMetadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

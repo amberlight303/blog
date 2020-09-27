@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-@ComponentScan({ "com.amberlight.cloud.gateway.auth.task" })
+@ComponentScan({ "com.amberlight.cloud.gateway.auth.task", "com.amberlight.cloud.struct.security" })
 public class SpringTaskConfig {
 
 }

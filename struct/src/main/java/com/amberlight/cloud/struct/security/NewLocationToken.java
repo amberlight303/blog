@@ -1,4 +1,4 @@
-package com.amberlight.cloud.gateway.auth.persistence.model;
+package com.amberlight.cloud.struct.security;
 
 import lombok.Data;
 

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import java.util.Locale;
 
 @Configuration
-@ComponentScan(basePackages = { "com.amberlight.cloud.gateway" })
+@ComponentScan(basePackages = { "com.amberlight.cloud.gateway", "com.amberlight.cloud.struct.security" })
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
 

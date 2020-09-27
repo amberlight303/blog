@@ -9,7 +9,7 @@ import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@ComponentScan(basePackages = { "com.amberlight.cloud.gateway.auth.captcha" })
+@ComponentScan(basePackages = { "com.amberlight.cloud.gateway.auth.captcha", "com.amberlight.cloud.struct.security" })
 public class CaptchaConfig {
 
     @Bean

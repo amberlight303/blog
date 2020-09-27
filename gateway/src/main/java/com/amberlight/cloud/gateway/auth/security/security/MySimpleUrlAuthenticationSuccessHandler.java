@@ -2,7 +2,7 @@ package com.amberlight.cloud.gateway.auth.security.security;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.User;
 import com.amberlight.cloud.gateway.auth.service.DeviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

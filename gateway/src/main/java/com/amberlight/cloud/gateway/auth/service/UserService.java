@@ -2,11 +2,9 @@ package com.amberlight.cloud.gateway.auth.service;
 
 
 import com.amberlight.cloud.gateway.auth.persistence.dao.*;
-import com.amberlight.cloud.gateway.auth.persistence.model.*;
 import com.amberlight.cloud.gateway.dto.auth.UserDto;
 import com.amberlight.cloud.gateway.error.auth.UserAlreadyExistException;
-import com.amberlight.cloud.gateway.auth.persistence.dao.*;
-import com.amberlight.cloud.gateway.auth.persistence.model.*;
+import com.amberlight.cloud.struct.security.*;
 import com.maxmind.geoip2.DatabaseReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +20,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

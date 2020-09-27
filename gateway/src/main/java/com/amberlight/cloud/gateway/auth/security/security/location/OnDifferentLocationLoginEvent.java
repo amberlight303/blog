@@ -1,7 +1,7 @@
 package com.amberlight.cloud.gateway.auth.security.security.location;
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.NewLocationToken;
+import com.amberlight.cloud.struct.security.NewLocationToken;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;

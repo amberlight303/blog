@@ -1,7 +1,7 @@
 package com.amberlight.cloud.gateway.auth.security.security;
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.PasswordResetToken;
+import com.amberlight.cloud.struct.security.PasswordResetToken;
 import com.amberlight.cloud.gateway.auth.persistence.dao.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

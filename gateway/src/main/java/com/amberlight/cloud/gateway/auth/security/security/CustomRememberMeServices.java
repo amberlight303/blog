@@ -2,7 +2,7 @@ package com.amberlight.cloud.gateway.auth.security.security;
 
 
 import com.amberlight.cloud.gateway.auth.persistence.dao.UserRepository;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;

@@ -2,8 +2,8 @@ package com.amberlight.cloud.gateway.auth.persistence.dao;
 
 
 
-import com.amberlight.cloud.gateway.auth.persistence.model.PasswordResetToken;
-import com.amberlight.cloud.gateway.auth.persistence.model.User;
+import com.amberlight.cloud.struct.security.PasswordResetToken;
+import com.amberlight.cloud.struct.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
