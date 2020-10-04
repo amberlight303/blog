@@ -1,18 +1,19 @@
 package com.amberlight.cloud.svcpost.post.service;
 
-import com.amberlight.cloud.svcpost.post.Post;
+import com.amberlight.cloud.svcpost.post.model.domain.Post;
+import com.amberlight.cloud.svcpost.post.model.dto.PostDto;
 
 import java.util.List;
 
 public interface PostService {
 
-    public List<Post> findAllPosts();
+    List<Post> findAllPosts();
 
-    public Post findPostById(String postId);
+    Post findPostById(String postId);
 
-    public Post createPost(Post post);
+    Post createPost(Post post);
 
-    public void deletePost(String postId);
+    void deletePost(String postId);
 
-    public Post updatePost(Post post, String postId);
+    Post updatePost(Post post, String postId);
 }

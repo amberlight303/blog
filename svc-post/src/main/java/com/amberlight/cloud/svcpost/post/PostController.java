@@ -4,11 +4,13 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import com.amberlight.cloud.svcpost.post.model.domain.Post;
+import com.amberlight.cloud.svcpost.post.model.dto.PostDto;
+import com.amberlight.cloud.svcpost.post.service.PostElasticService;
+import com.amberlight.cloud.svcpost.post.service.PostService;
 import com.amberlight.cloud.svcpost.post.service.PostServiceImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,10 @@ public class PostController {
     private Gson gson = new Gson();
 
     @Autowired
-    private PostServiceImpl postService;
+    private PostService postService;
+
+    @Autowired
+    private PostElasticService postElasticService;
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping
@@ -62,6 +67,16 @@ public class PostController {
     @PutMapping("/{postId}")
     public Post updatePost(@RequestBody Post post, @PathVariable String postId) {
         return postService.updatePost(post, postId);
+    }
+
+    @GetMapping("/search")
+    public List<Post> findByTitleOrContentAllIgnoreCase(@RequestParam("s") String keyword) {
+        return postElasticService.findByTitleOrContentAllIgnoreCase(keyword);
+    }
+
+    @GetMapping("/search/{userId}")
+    public List<Post> findAllByUserId(@PathVariable String userId) {
+        return postElasticService.findAllByUserId(userId);
     }
 
 }
