@@ -14,6 +14,7 @@ import com.amberlight.cloud.svcpost.post.model.dto.PostDto;
 import com.amberlight.cloud.svcpost.post.repository.mongodb.PostMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,14 +52,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(String postId) {
+    public void deletePost(String postId, Long userId) {
+        Post post = findPostById(postId);
+        if (post == null) throw new EntityNotFoundException("Post doesn't exist");
+        if (!post.getUserId().equals(userId)) throw new AccessDeniedException("Access to the operation denied");
         postRepository.deleteById(postId);
+        postElasticService.deleteById(postId);
     }
 
     @Override
-    public Post updatePost(Post post, String postId) {
+    public Post updatePost(Post post, String postId, Long userId) {
         Optional<Post> dbPost = postRepository.findById(postId);
         if (dbPost.isPresent()) {
+            if (!dbPost.get().getUserId().equals(userId))
+                throw new AccessDeniedException("Access to the operation denied");
             Post postForUpdate =  new Post();
             postForUpdate.setUserId(dbPost.get().getUserId());
             postForUpdate.setTitle(post.getTitle());
@@ -73,5 +80,8 @@ public class PostServiceImpl implements PostService {
             throw new EntityNotFoundException("Post doesn't exist");
         }
     }
+
+
+
 
 }

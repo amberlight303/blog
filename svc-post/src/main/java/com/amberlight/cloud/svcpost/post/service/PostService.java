@@ -13,7 +13,8 @@ public interface PostService {
 
     Post createPost(Post post);
 
-    void deletePost(String postId);
+    void deletePost(String postId, Long userId);
 
-    Post updatePost(Post post, String postId);
+    Post updatePost(Post post, String postId, Long userId);
+
 }

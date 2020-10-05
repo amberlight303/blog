@@ -87,8 +87,12 @@ public class PostElasticServiceImpl implements PostElasticService {
     }
 
     @Override
-    public List<Post> findAllByUserId(String userId) {
+    public List<Post> findAllByUserId(Long userId) {
         return postRepository.findAllByUserId(userId);
     }
 
+    @Override
+    public void deleteById(String postId) {
+        postRepository.deleteById(postId);
+    }
 }

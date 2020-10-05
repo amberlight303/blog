@@ -11,6 +11,8 @@ public interface PostElasticService {
 
     List<Post> findByTitleOrContentAllIgnoreCase(String keyword);
 
-    List<Post> findAllByUserId(String userId);
+    List<Post> findAllByUserId(Long userId);
+
+    void deleteById(String postId);
 
 }

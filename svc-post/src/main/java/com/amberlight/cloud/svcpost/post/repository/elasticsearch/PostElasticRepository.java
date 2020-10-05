@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface PostElasticRepository extends ElasticsearchRepository<Post, String> {
 
-    List<Post> findByTitleOrContentAllIgnoreCase(String keyword);
+//    List<Post> findByTitleOrContentAllIgnoreCase(String keyword);
 
-    List<Post> findAllByUserId(String userId);
+    List<Post> findAllByUserId(Long userId);
 }
