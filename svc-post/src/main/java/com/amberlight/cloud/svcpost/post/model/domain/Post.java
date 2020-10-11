@@ -19,6 +19,10 @@ public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Post(String id) {
+        this.id = id;
+    }
+
     @Id
     private String id;
 

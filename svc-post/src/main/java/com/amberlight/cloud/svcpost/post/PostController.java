@@ -12,6 +12,7 @@ import com.amberlight.cloud.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.cloud.svcpost.post.service.PostElasticService;
 import com.amberlight.cloud.svcpost.post.service.PostService;
 import com.amberlight.cloud.svcpost.post.service.PostServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -71,15 +72,24 @@ public class PostController {
         return postService.findPostById(postId);
     }
 
+
+//    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN','ROLE_SYSTEM')")
+//    @Secured("ADMIN")
+//    @Secured("ROLE_EBANUMBA")
+    @GetMapping("/test")
+    public String test() {
+        return "hello boi, this is test";
+    }
+
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
+    public Post createPost(@RequestBody Post post) throws JsonProcessingException {
         return postService.createPost(post);
     }
 
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @DeleteMapping("/{postId}")
-    public void deletePost(@PathVariable String postId) {
+    public void deletePost(@PathVariable String postId) throws JsonProcessingException {
         postService.deletePost(postId, authFacade.getUser().getId());
     }
 

@@ -5,7 +5,7 @@ spring:
     name: gateway
   cloud:
     config:
-      uri: http://localhost:9091
+      uri: http://localhost:9081
       fail-fast: true
       username: configUser
       password: configPassword
