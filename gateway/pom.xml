@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.amberlight.cloud</groupId>
     <artifactId>gateway</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>gateway</name>
@@ -11,80 +12,67 @@
         <groupId>com.amberlight</groupId>
         <artifactId>blog</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-<!--        <relativePath>../../../parent-boot-1</relativePath>-->
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>com.amberlight.spring.cloud</groupId>
+            <groupId>com.amberlight.cloud</groupId>
             <artifactId>struct</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-<!--            <version>${spring.boot.starter.data.jpa.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
-<!--            <version>${spring.session.data.redis.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-<!--            <version>${spring.boot.starter.data.redis.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-<!--            <version>${spring.boot.starter.security.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-<!--            <version>${spring.security.test.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-<!--            <version>${spring.boot.starter.web.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-<!--            <version>${spring.boot.starter.mail.version}</version>-->
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.session</groupId>-->
-<!--            <artifactId>spring-session-bom</artifactId>-->
-<!--            <version>${spring.session.bom.version}</version>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-devtools</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--            <optional>true</optional>-->
 <!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-devtools</artifactId>-->
-<!--&lt;!&ndash;            <version>${spring.boot.devtools.version}</version>&ndash;&gt;-->
-<!--            <scope>runtime</scope>-->
+<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
 <!--            <optional>true</optional>-->
 <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-<!--            <version>${spring.boot.tomcat.version}</version>-->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-<!--            <version>${spring.boot.test.version}</version>-->
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -96,17 +84,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-<!--            <version>${spring.boot.starter.thymeleaf.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-<!--            <version>${thymeleaf.springsecurity5.version}</version>-->
         </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-<!--            <version>${thymeleaf.layout.dialect.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -118,11 +103,6 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash-logback-encoder.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -162,7 +142,6 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-<!--            <version>${javax.validation.version}</version>-->
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -175,16 +154,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-<!--            <version>${spring.cloud.starter.config.version}</version>-->
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-eureka</artifactId>-->
-<!--            <version>${spring.cloud.starter.eureka.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -209,44 +178,5 @@
             <version>${google.gson.version}</version>
         </dependency>
     </dependencies>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <artifactId>maven-antrun-plugin</artifactId>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>generate-resources</phase>-->
-<!--                        <configuration>-->
-<!--                            <tasks>-->
-<!--                                <exec executable="cmd" osfamily="windows"-->
-<!--                                      dir="${project.basedir}/src/main/angular/ui">-->
-<!--                                    <arg value="/c"/>-->
-<!--                                    <arg value="ng"/>-->
-<!--                                    <arg value="build"/>-->
-<!--                                </exec>-->
-<!--                                <exec executable="/bin/sh" osfamily="mac"-->
-<!--                                      dir="${project.basedir}/src/main/angular/ui">-->
-<!--                                    <arg value="-c"/>-->
-<!--                                    <arg value="ng build"/>-->
-<!--                                </exec>-->
-<!--                            </tasks>-->
-<!--                        </configuration>-->
-<!--                        <goals>-->
-<!--                            <goal>run</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
-
-<!--    <properties>-->
-<!--        <spring-cloud-dependencies.version>Dalston.RELEASE</spring-cloud-dependencies.version>-->
-<!--    </properties>-->
     
 </project>

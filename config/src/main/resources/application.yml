@@ -7,7 +7,7 @@ spring:
     config:
       server:
         native:
-          search-locations: file:///home/someone/Documents/idea_projects/blog/dev-application-config
+          search-locations: file:/home/someone/Documents/idea_projects/blog/dev-application-config
       enabled: true
   profiles:
      active: native

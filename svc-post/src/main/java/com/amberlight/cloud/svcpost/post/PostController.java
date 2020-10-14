@@ -14,6 +14,8 @@ import com.amberlight.cloud.svcpost.post.service.PostService;
 import com.amberlight.cloud.svcpost.post.service.PostServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/posts")
 public class PostController {
+
+    private static final Logger logger = LogManager.getLogger(PostController.class);
 
     private Gson gson = new Gson();
 
@@ -78,6 +82,8 @@ public class PostController {
 //    @Secured("ROLE_EBANUMBA")
     @GetMapping("/test")
     public String test() {
+//        throw new IllegalStateException("SUKA, ETO TEST!");
+        logger.debug("ETO NOVOE SOOBSHENIE!!!");
         return "hello boi, this is test";
     }
 

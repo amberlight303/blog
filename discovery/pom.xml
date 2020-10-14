@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.amberlight.cloud</groupId>
     <artifactId>discovery</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>discovery</name>
@@ -11,14 +12,12 @@
         <groupId>com.amberlight</groupId>
         <artifactId>blog</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-<!--        <relativePath>../../../parent-boot-1</relativePath>-->
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-<!--            <version>${spring.cloud.starter.config.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -28,27 +27,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-<!--            <version>${spring.boot.starter.security.version}</version>-->
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.session</groupId>-->
-<!--            <artifactId>spring-session-bom</artifactId>-->
-<!--            <version>${spring.session.bom.version}</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-<!--            <version>${spring.boot.starter.data.redis.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
-<!--            <version>${spring.session.data.redis.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-<!--            <version>${spring.boot.test.version}</version>-->
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -60,7 +50,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-<!--            <version>${spring.security.test.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -71,7 +60,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-<!--            <version>${junit.version}</version>-->
             <scope>test</scope>
         </dependency>
     </dependencies>

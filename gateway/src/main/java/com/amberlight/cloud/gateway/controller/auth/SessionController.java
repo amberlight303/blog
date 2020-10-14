@@ -2,6 +2,8 @@ package com.amberlight.cloud.gateway.controller.auth;
 
 import com.google.gson.Gson;
 import com.netflix.zuul.context.RequestContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,12 +18,16 @@ import java.util.Map;
 @RestController
 public class SessionController {
 
+    private static final Logger logger = LogManager.getLogger(SessionController.class);
+
     private Gson gson = new Gson();
 
 //    @Secured("ROLE_ADMIN")
     @Secured("ROLE_ADMIN")
     @RequestMapping("/hello-to-admin")
     public String helloAdmin(Principal principal, @RequestHeader Map<String, String> headers) {
+
+        logger.info("ZAEBALA, PIDARASKA! RAZRABOTCHIKI - OSHIBKI PRIRODI EBANIE! ZDOHNITE!");
 
 //        RequestContext context = RequestContext.getCurrentContext();
 //        HttpSession httpSession = context.getRequest().getSession();

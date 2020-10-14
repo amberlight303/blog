@@ -36,6 +36,22 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,7 +83,7 @@
         <spring.cloud.starter.config.version>2.2.4.RELEASE</spring.cloud.starter.config.version>
         <lombok.version>1.18.12</lombok.version>
         <postgresql.version>42.2.15</postgresql.version>
-        <logstash-logback-encoder.version>4.8</logstash-logback-encoder.version>
+<!--        <logstash-logback-encoder.version>4.8</logstash-logback-encoder.version>-->
         <guava.version>29.0-jre</guava.version>
         <geoip2.version>2.14.0</geoip2.version>
         <uap-java.version>1.4.0</uap-java.version>
