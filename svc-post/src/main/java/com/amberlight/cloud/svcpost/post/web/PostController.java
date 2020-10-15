@@ -1,17 +1,14 @@
-package com.amberlight.cloud.svcpost.post;
+package com.amberlight.cloud.svcpost.post.web;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 import com.amberlight.cloud.struct.security.User;
-import com.amberlight.cloud.svcpost.post.exception.EntityNotFoundException;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
-import com.amberlight.cloud.svcpost.post.model.dto.PostDto;
 import com.amberlight.cloud.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.cloud.svcpost.post.service.PostElasticService;
 import com.amberlight.cloud.svcpost.post.service.PostService;
-import com.amberlight.cloud.svcpost.post.service.PostServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
@@ -19,10 +16,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/posts")
+@Controller
 public class PostController {
 
     private static final Logger logger = LogManager.getLogger(PostController.class);
@@ -49,8 +48,6 @@ public class PostController {
 
 
         System.out.println("*********************************** PRINCIPAL IS: \n" + gson.toJson(principal));
-
-
 
         Object principalObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -82,8 +79,7 @@ public class PostController {
 //    @Secured("ROLE_EBANUMBA")
     @GetMapping("/test")
     public String test() {
-//        throw new IllegalStateException("SUKA, ETO TEST!");
-        logger.debug("ETO NOVOE SOOBSHENIE!!!");
+        logger.debug("KUKUSIA SWEETY!!!");
         return "hello boi, this is test";
     }
 
