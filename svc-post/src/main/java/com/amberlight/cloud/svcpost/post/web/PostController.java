@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.amberlight.cloud.struct.security.User;
+import com.amberlight.cloud.struct.exception.BusinessLogicException;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
 import com.amberlight.cloud.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.cloud.svcpost.post.service.PostElasticService;
@@ -79,8 +80,11 @@ public class PostController {
 //    @Secured("ROLE_EBANUMBA")
     @GetMapping("/test")
     public String test() {
-        logger.debug("KUKUSIA SWEETY!!!");
-        return "hello boi, this is test";
+//        throw new IllegalStateException("Oh, shit, there is a jepa exception!");
+        throw new BusinessLogicException("This is a business logic exception message", 51321);
+//        throw new ServerException("This is a server exception message", 651321);
+//        logger.debug("KUKUSIA SWEETY!!!");
+//        return "hello boi, this is test";
     }
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")

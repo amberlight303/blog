@@ -1,28 +1,19 @@
 package com.amberlight.cloud.svcpost.post.service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.amberlight.cloud.svcpost.config.KafkaConsumerConfig;
+import com.amberlight.cloud.struct.exception.BusinessLogicException;
 import com.amberlight.cloud.svcpost.config.KafkaProducerConfig;
-import com.amberlight.cloud.svcpost.post.exception.EntityNotFoundException;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
-import com.amberlight.cloud.svcpost.post.model.dto.PostDto;
 import com.amberlight.cloud.svcpost.post.repository.mongodb.PostMongoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
-import org.apache.kafka.common.header.internals.RecordHeader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.AccessDeniedException;
@@ -75,14 +66,13 @@ public class PostServiceImpl implements PostService {
         ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
                                                 savedPost.getId(), objectMapper.writeValueAsString(savedPost), headers);
         kafkaTemplate.send(savePostRecord);
-//        postElasticService.savePostWithId(savedPost);
         return savedPost;
     }
 
     @Override
     public void deletePost(String postId, Long userId) throws JsonProcessingException {
         Post post = findPostById(postId);
-        if (post == null) throw new EntityNotFoundException("Post doesn't exist");
+        if (post == null) throw new BusinessLogicException("Post doesn't exist");
         if (!post.getUserId().equals(userId)) throw new AccessDeniedException("Access to the operation denied");
         postRepository.deleteById(postId);
         Post postToDelete = new Post(postId);
@@ -91,7 +81,6 @@ public class PostServiceImpl implements PostService {
         ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
                                         postToDelete.getId(), objectMapper.writeValueAsString(postToDelete), headers);
         kafkaTemplate.send(savePostRecord);
-//        postElasticService.deleteById(postId);
     }
 
     @Override
@@ -111,11 +100,8 @@ public class PostServiceImpl implements PostService {
             postElasticService.savePostWithId(updatedPost);
             return updatedPost;
         } else {
-            throw new EntityNotFoundException("Post doesn't exist");
+            throw new BusinessLogicException("Post doesn't exist");
         }
     }
-
-
-
 
 }
