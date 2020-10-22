@@ -9,11 +9,12 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Base64;
 
 @Component
-public class SessionSavingZuulPreFilter extends ZuulFilter {
+public class ZuulPreFilter extends ZuulFilter {
 
 //        private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -48,6 +49,16 @@ public class SessionSavingZuulPreFilter extends ZuulFilter {
                 repository.findById(httpSession.getId());
                 context.addZuulRequestHeader("cookie", "SESSION=" + base64Encode(httpSession.getId()));
 //                log.info("ZuulPreFilter session proxy: {} and {}", session.getId(), httpSession.getId());
+
+                // Rely on HttpServletRequest to retrieve the correct remote address from upstream X-Forwarded-For header
+//                HttpServletRequest request = context.getRequest();
+//                String remoteAddr = request.getRemoteAddr();
+
+                // Pass remote address downstream by setting X-Forwarded for header again on Zuul request
+//                log.debug("Settings X-Forwarded-For to: {}", remoteAddr);
+                context.getZuulRequestHeaders().put("X-Forwarded-For", context.getRequest().getRemoteAddr());
+
+
 
                 return null;
         }

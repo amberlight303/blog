@@ -1,17 +1,18 @@
 package com.amberlight.cloud.svcpost.post.web;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.amberlight.cloud.struct.security.User;
-import com.amberlight.cloud.struct.exception.BusinessLogicException;
+import com.amberlight.cloud.svcpost.config.log4j2.CustomMessage;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
 import com.amberlight.cloud.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.cloud.svcpost.post.service.PostElasticService;
 import com.amberlight.cloud.svcpost.post.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,11 @@ public class PostController {
 
     private static final Logger logger = LogManager.getLogger(PostController.class);
 
-    private Gson gson = new Gson();
+    private static final Logger customJsonConsoleLogger = LogManager.getLogger("CUSTOM_JSON_CONSOLE_LOGGER");
+//    private static final Logger businessLogger = LogManager.getLogger("BUSINESS");
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private IAuthenticationFacade authFacade;
@@ -40,15 +45,14 @@ public class PostController {
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")
     @GetMapping
-    public List<Post> findAllPosts(Authentication authentication, Principal principal, @RequestHeader Map<String, String> headers) {
-        System.out.println("*********************************** authentication IS: \n" + gson.toJson(authentication));
+    public List<Post> findAllPosts(Authentication authentication, Principal principal, @RequestHeader Map<String, String> headers) throws JsonProcessingException {
+        System.out.println("*********************************** authentication IS: \n" + objectMapper.writeValueAsString(authentication));
 
 //        User authUser = (User) authentication.getPrincipal();
 
-//        System.out.println("++++++++++++++ authUser: " + gson.toJson(authUser));
 
 
-        System.out.println("*********************************** PRINCIPAL IS: \n" + gson.toJson(principal));
+        System.out.println("*********************************** PRINCIPAL IS: \n" + objectMapper.writeValueAsString(principal));
 
         Object principalObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -57,7 +61,7 @@ public class PostController {
         System.out.println("user.getId(): " + user.getId());
 
 
-        System.out.println("=================================== PRINCIPAL IS: \n" + gson.toJson(principalObject));
+        System.out.println("=================================== PRINCIPAL IS: \n" + objectMapper.writeValueAsString(principalObject));
 
         headers.forEach((key, value) -> {
             System.out.println(String.format("Header '%s' = %s", key, value));
@@ -81,10 +85,22 @@ public class PostController {
     @GetMapping("/test")
     public String test() {
 //        throw new IllegalStateException("Oh, shit, there is a jepa exception!");
-        throw new BusinessLogicException("This is a business logic exception message", 51321);
+//        throw new BusinessLogicException("This is a business logic exception message", 51321);
 //        throw new ServerException("This is a server exception message", 651321);
-//        logger.debug("KUKUSIA SWEETY!!!");
-//        return "hello boi, this is test";
+//        customJsonConsoleLogger.debug(CustomMessage.builder().message("YOYOYO").build());
+        Map<String, Object> customFields = new HashMap<>();
+        customFields.put("customEbat", "kopat");
+        customFields.put("customBiba", "boba");
+        customFields.put("customNumber", 16);
+
+//        customJsonConsoleLogger.debug(CustomJsonMessage.builder()
+//                        .message("TRALYALYA").customFields(customFields).build(),
+//                new IllegalStateException("fucking sheeeet happened"));
+
+        customJsonConsoleLogger.debug(CustomMessage.builder()
+                        .message("TRALYALYA").customFields(customFields).build(),
+                new IllegalStateException("fucking sheeeet happened"));
+        return "hello boi, this is test";
     }
 
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN','ROLE_SYSTEM')")

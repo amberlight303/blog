@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
+
     private final HttpHeaders defaultHeaders = new HttpHeaders() {{
         add(HttpHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE);
     }};

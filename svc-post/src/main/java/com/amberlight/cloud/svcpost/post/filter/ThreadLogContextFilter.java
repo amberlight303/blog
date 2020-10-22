@@ -27,8 +27,11 @@ public class ThreadLogContextFilter extends OncePerRequestFilter {
         String localRequestId = UUID.randomUUID().toString();
         ThreadContext.put("UID", user.getId().toString());
         ThreadContext.put("LRID", localRequestId);
+        ThreadContext.put("IP", request.getRemoteAddr());
+        ThreadContext.put("HOST", request.getServerName() + ":" + request.getServerPort());
         response.addHeader(HttpUtil.HEADER_X_REQUEST_ID, localRequestId);
         filterChain.doFilter(request, response);
+        ThreadContext.clearAll();
     }
 
 }

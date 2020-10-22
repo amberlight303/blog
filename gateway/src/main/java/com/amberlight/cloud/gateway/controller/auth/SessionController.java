@@ -1,9 +1,11 @@
 package com.amberlight.cloud.gateway.controller.auth;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,12 +22,13 @@ public class SessionController {
 
     private static final Logger logger = LogManager.getLogger(SessionController.class);
 
-    private Gson gson = new Gson();
+    @Autowired
+    private ObjectMapper objectMapper;
 
 //    @Secured("ROLE_ADMIN")
     @Secured("ROLE_ADMIN")
     @RequestMapping("/hello-to-admin")
-    public String helloAdmin(Principal principal, @RequestHeader Map<String, String> headers) {
+    public String helloAdmin(Principal principal, @RequestHeader Map<String, String> headers) throws JsonProcessingException {
 
         logger.info("ZAEBALA, PIDARASKA! RAZRABOTCHIKI - OSHIBKI PRIRODI EBANIE! ZDOHNITE!");
 
@@ -37,7 +40,7 @@ public class SessionController {
 
 
 
-        System.out.println("################################### PRINCIPAL (PRINCIPAL) IS: \n" + gson.toJson(principal));
+        System.out.println("################################### PRINCIPAL (PRINCIPAL) IS: \n" + objectMapper.writeValueAsString(principal));
 
 
         Object principalObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,7 +49,7 @@ public class SessionController {
                 + RequestContextHolder.currentRequestAttributes().getSessionId());
 
         System.out.println("=================================== PRINCIPAL (FROM SecurityContextHolder) IS: \n"
-                + gson.toJson(principalObject));
+                + objectMapper.writeValueAsString(principalObject));
 
         headers.forEach((key, value) -> {
             System.out.println(String.format("Header '%s' = %s", key, value));
