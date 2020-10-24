@@ -1,9 +1,8 @@
 package com.amberlight.cloud.svcpost.config.log4j2;
 
 
-import com.amberlight.cloud.svcpost.config.util.JsonUtils;
+import com.amberlight.cloud.svcpost.config.util.Utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
@@ -25,15 +24,7 @@ public class CustomJsonLayout extends AbstractStringLayout {
 
     private static final String DEFAULT_EOL = "\r\n";
 
-    private final ObjectMapper objectMapper = JsonUtils.OBJECT_MAPPER;
     private final boolean locationInfo;
-
-    public CustomJsonLayout(Configuration config, Charset aCharset, Serializer headerSerializer,
-                            Serializer footerSerializer, boolean locationInfo) {
-        super(config, aCharset, headerSerializer, footerSerializer);
-        this.locationInfo = locationInfo;
-    }
-
 
     @PluginFactory
     public static CustomJsonLayout createLayout(
@@ -43,12 +34,18 @@ public class CustomJsonLayout extends AbstractStringLayout {
         return new CustomJsonLayout(config, charset, null, null, locationInfo);
     }
 
+    public CustomJsonLayout(Configuration config, Charset aCharset, Serializer headerSerializer,
+                            Serializer footerSerializer, boolean locationInfo) {
+        super(config, aCharset, headerSerializer, footerSerializer);
+        this.locationInfo = locationInfo;
+    }
 
     @Override
     public String toSerializable(LogEvent event) {
         Map<String, Object> logMap = new HashMap<>();
 
         // Log information
+        logMap.put("timestamp", Utils.DATE_FORMAT.format(System.currentTimeMillis()));
         logMap.put("level", event.getLevel().name());
         logMap.put("loggerName", event.getLoggerName());
 
@@ -75,13 +72,15 @@ public class CustomJsonLayout extends AbstractStringLayout {
             logMap.put("source", sourceMap);
         }
 
-        // Message & custom fields
+        // Message, log event id, custom fields
         if (event.getMessage() instanceof ICustomMessage) {
             Object[] params = event.getMessage().getParameters();
-            Map<String, Object> customFields = (Map) params[1];
             logMap.put("message", params[0]);
-            if (customFields != null) {
-                logMap.putAll(customFields);
+            if (params[1] != null) {
+                logMap.put("logEventId", params[1]);
+            }
+            if (params[2] != null) {
+                logMap.put("customFields", params[2]);
             }
         } else {
             logMap.put("message", event.getMessage().getFormattedMessage());
@@ -109,7 +108,7 @@ public class CustomJsonLayout extends AbstractStringLayout {
         }
 
         try {
-            return objectMapper.writeValueAsString(logMap).concat(DEFAULT_EOL);
+            return Utils.OBJECT_MAPPER.writeValueAsString(logMap).concat(DEFAULT_EOL);
         } catch (JsonProcessingException e) {
             return DEFAULT_EOL;
         }

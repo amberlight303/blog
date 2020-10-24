@@ -2,6 +2,8 @@ package com.amberlight.cloud.struct.exception;
 
 public class ServerException extends RuntimeException {
 
+    private Integer logEventId;
+
     private Integer code;
 
     public ServerException() {
@@ -25,6 +27,16 @@ public class ServerException extends RuntimeException {
         this.code = code;
     }
 
+    public ServerException(Integer logEventId, String errorMessage, Integer code) {
+        super(errorMessage);
+        this.logEventId = logEventId;
+        this.code = code;
+    }
+
+    public ServerException(Integer logEventId, String errorMessage) {
+        super(errorMessage);
+        this.logEventId = logEventId;
+    }
     public Integer getCode() {
         return code;
     }
@@ -33,4 +45,11 @@ public class ServerException extends RuntimeException {
         this.code = code;
     }
 
+    public Integer getLogEventId() {
+        return logEventId;
+    }
+
+    public void setLogEventId(Integer logEventId) {
+        this.logEventId = logEventId;
+    }
 }

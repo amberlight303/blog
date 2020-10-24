@@ -7,12 +7,16 @@ import java.util.Optional;
 
 import com.amberlight.cloud.struct.exception.BusinessLogicException;
 import com.amberlight.cloud.svcpost.config.KafkaProducerConfig;
+import com.amberlight.cloud.svcpost.config.log4j2.CustomMessage;
+import com.amberlight.cloud.svcpost.config.log4j2.LogLevel;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
 import com.amberlight.cloud.svcpost.post.repository.mongodb.PostMongoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -22,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostServiceImpl implements PostService {
 
-//    private static final Logger LOG = LoggerFactory.getLogger(PostServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(PostServiceImpl.class);
 
     @Value(value = "${kafka.topic.elasticsearch.name}")
     private String kafkaElasticsearchTopic;
@@ -66,6 +70,7 @@ public class PostServiceImpl implements PostService {
         ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
                                                 savedPost.getId(), objectMapper.writeValueAsString(savedPost), headers);
         kafkaTemplate.send(savePostRecord);
+        logger.log(LogLevel.BUSINESS, new CustomMessage(1, "Post created"));
         return savedPost;
     }
 
@@ -81,6 +86,7 @@ public class PostServiceImpl implements PostService {
         ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
                                         postToDelete.getId(), objectMapper.writeValueAsString(postToDelete), headers);
         kafkaTemplate.send(savePostRecord);
+        logger.log(LogLevel.BUSINESS, new CustomMessage(3, "Post deleted"));
     }
 
     @Override
@@ -88,7 +94,7 @@ public class PostServiceImpl implements PostService {
         Optional<Post> dbPost = postRepository.findById(postId);
         if (dbPost.isPresent()) {
             if (!dbPost.get().getUserId().equals(userId))
-                throw new AccessDeniedException("Access to the operation denied");
+                throw new BusinessLogicException(-2, "Access to the operation denied");
             Post postForUpdate =  new Post();
             postForUpdate.setUserId(dbPost.get().getUserId());
             postForUpdate.setTitle(post.getTitle());
@@ -98,9 +104,11 @@ public class PostServiceImpl implements PostService {
             postForUpdate.setModifiedDate(new Date());
             Post updatedPost = postRepository.save(postForUpdate);
             postElasticService.savePostWithId(updatedPost);
+            logger.log(LogLevel.BUSINESS, new CustomMessage(2, "Post updated"));
             return updatedPost;
         } else {
-            throw new BusinessLogicException("Post doesn't exist");
+            // todo: put logEventId in exception
+            throw new BusinessLogicException(-1, "Post doesn't exist");
         }
     }
 

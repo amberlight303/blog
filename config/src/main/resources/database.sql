@@ -73,17 +73,19 @@ values ( (select id from users_accounts where email = 'amberlight303@gmail.com')
        );
 ------------------------------------------------------------------------------------------------------------------------
 
---//////////////////////////////////////////////////// POSTS ///////////////////////////////////////////////////////////
-
+--//////////////////////////////////////////////////// ETC ///////////////////////////////////////////////////////////
 ------------------------------------------------------------------------------------------------------------------------
-create table posts (
-    id serial primary key,
-    user_id int,
-    title varchar(150),
-    preview_text varchar(450),
-    content text
+create table log_events_svc_post (
+    id integer primary key,
+    description text,
+    date_created timestamp default current_timestamp
 );
-
-insert into posts (id, user_id, title, preview_text, content)
-values ((select nextval('posts_id_seq')), 1, 'Test title', 'Test preview text', 'Test content text');
+------------------------------------------------------------------------------------------------------------------------
+insert into log_events_svc_post (id, description)
+values (1, 'Post created'),
+       (2, 'Post updated'),
+       (3, 'Post deleted'),
+       (4, 'Searched posts by keyword matching with titles or contents'),
+       (-1, 'Trying to update post. Post does''t exist'),
+       (-2, 'Trying to update post. User is trying to delete someone else''s post ');
 ------------------------------------------------------------------------------------------------------------------------

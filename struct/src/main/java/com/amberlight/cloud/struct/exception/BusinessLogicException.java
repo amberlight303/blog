@@ -2,6 +2,8 @@ package com.amberlight.cloud.struct.exception;
 
 public class BusinessLogicException extends RuntimeException {
 
+    private Integer logEventId;
+
     private Integer code;
 
     public BusinessLogicException() {
@@ -25,6 +27,17 @@ public class BusinessLogicException extends RuntimeException {
         this.code = code;
     }
 
+    public BusinessLogicException(Integer logEventId, String errorMessage, Integer code) {
+        super(errorMessage);
+        this.logEventId = logEventId;
+        this.code = code;
+    }
+
+    public BusinessLogicException(Integer logEventId, String errorMessage) {
+        super(errorMessage);
+        this.logEventId = logEventId;
+    }
+
     public Integer getCode() {
         return code;
     }
@@ -33,4 +46,11 @@ public class BusinessLogicException extends RuntimeException {
         this.code = code;
     }
 
+    public Integer getLogEventId() {
+        return logEventId;
+    }
+
+    public void setLogEventId(Integer logEventId) {
+        this.logEventId = logEventId;
+    }
 }

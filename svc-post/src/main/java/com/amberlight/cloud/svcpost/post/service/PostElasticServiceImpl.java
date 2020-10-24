@@ -1,7 +1,11 @@
 package com.amberlight.cloud.svcpost.post.service;
 
+import com.amberlight.cloud.svcpost.config.log4j2.CustomMessage;
+import com.amberlight.cloud.svcpost.config.log4j2.LogLevel;
 import com.amberlight.cloud.svcpost.post.model.domain.Post;
 import com.amberlight.cloud.svcpost.post.repository.elasticsearch.PostElasticRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
@@ -24,6 +28,8 @@ import static org.elasticsearch.index.query.QueryBuilders.multiMatchQuery;
 
 @Service
 public class PostElasticServiceImpl implements PostElasticService {
+
+    private static final Logger logger = LogManager.getLogger(PostElasticServiceImpl.class);
 
     private final String POSTS_INDEX_COORDINATES = "posts";
 
@@ -81,13 +87,15 @@ public class PostElasticServiceImpl implements PostElasticService {
         postsSearchHits.forEach(hit -> {
             posts.add(hit.getContent());
         });
+        logger.log(LogLevel.BUSINESS,
+                new CustomMessage(4, String.format("Searched posts by %s. Results found: %d", keyword, posts.size())));
         return posts;
-
 //        return postRepository.findByTitleOrContentAllIgnoreCase(keyword);
     }
 
     @Override
     public List<Post> findAllByUserId(Long userId) {
+
         return postRepository.findAllByUserId(userId);
     }
 
