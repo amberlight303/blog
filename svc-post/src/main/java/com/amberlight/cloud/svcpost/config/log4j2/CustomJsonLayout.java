@@ -1,7 +1,7 @@
 package com.amberlight.cloud.svcpost.config.log4j2;
 
 
-import com.amberlight.cloud.svcpost.config.util.Utils;
+import com.amberlight.cloud.svcpost.config.util.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.Layout;
@@ -45,7 +45,7 @@ public class CustomJsonLayout extends AbstractStringLayout {
         Map<String, Object> logMap = new HashMap<>();
 
         // Log information
-        logMap.put("timestamp", Utils.DATE_FORMAT.format(System.currentTimeMillis()));
+        logMap.put("timestamp", Util.DATE_FORMAT.format(System.currentTimeMillis()));
         logMap.put("level", event.getLevel().name());
         logMap.put("loggerName", event.getLoggerName());
 
@@ -108,7 +108,7 @@ public class CustomJsonLayout extends AbstractStringLayout {
         }
 
         try {
-            return Utils.OBJECT_MAPPER.writeValueAsString(logMap).concat(DEFAULT_EOL);
+            return Util.MAPPER.writeValueAsString(logMap).concat(DEFAULT_EOL);
         } catch (JsonProcessingException e) {
             return DEFAULT_EOL;
         }

@@ -86,6 +86,8 @@ values (1, 'Post created'),
        (2, 'Post updated'),
        (3, 'Post deleted'),
        (4, 'Searched posts by keyword matching with titles or contents'),
+       (5, 'Post saved to elasticsearch'),
+       (6, 'Post deleted from elasticsearch'),
        (-1, 'Trying to update post. Post does''t exist'),
        (-2, 'Trying to update post. User is trying to delete someone else''s post ');
 ------------------------------------------------------------------------------------------------------------------------

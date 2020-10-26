@@ -90,7 +90,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(Post post, String postId, Long userId) {
+    public Post updatePost(Post post, String postId, Long userId) throws JsonProcessingException {
         Optional<Post> dbPost = postRepository.findById(postId);
         if (dbPost.isPresent()) {
             if (!dbPost.get().getUserId().equals(userId))
@@ -103,7 +103,13 @@ public class PostServiceImpl implements PostService {
             postForUpdate.setCreatedDate(dbPost.get().getCreatedDate());
             postForUpdate.setModifiedDate(new Date());
             Post updatedPost = postRepository.save(postForUpdate);
-            postElasticService.savePostWithId(updatedPost);
+            List<Header> headers = new ArrayList<>();
+            headers.add(KafkaProducerConfig.HEADER_COMMAND_SAVE);
+            ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
+                    updatedPost.getId(), objectMapper.writeValueAsString(updatedPost), headers);
+            kafkaTemplate.send(savePostRecord);
+
+
             logger.log(LogLevel.BUSINESS, new CustomMessage(2, "Post updated"));
             return updatedPost;
         } else {

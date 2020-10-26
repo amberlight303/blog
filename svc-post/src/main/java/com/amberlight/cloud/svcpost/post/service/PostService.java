@@ -16,6 +16,6 @@ public interface PostService {
 
     void deletePost(String postId, Long userId) throws JsonProcessingException;
 
-    Post updatePost(Post post, String postId, Long userId);
+    Post updatePost(Post post, String postId, Long userId) throws JsonProcessingException;
 
 }

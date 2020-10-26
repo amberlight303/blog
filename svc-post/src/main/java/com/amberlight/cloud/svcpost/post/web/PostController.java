@@ -97,7 +97,7 @@ public class PostController {
 
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PutMapping("/{postId}")
-    public Post updatePost(@RequestBody Post post, @PathVariable String postId) {
+    public Post updatePost(@RequestBody Post post, @PathVariable String postId) throws JsonProcessingException {
         return postService.updatePost(post, postId, authFacade.getUser().getId());
     }
 

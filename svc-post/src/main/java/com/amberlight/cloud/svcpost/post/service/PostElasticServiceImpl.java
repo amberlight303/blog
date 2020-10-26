@@ -55,26 +55,6 @@ public class PostElasticServiceImpl implements PostElasticService {
 
     @Override
     public List<Post> findByTitleOrContentAllIgnoreCase(String keyword) {
-//        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-//                .withQuery(matchQuery("content", keyword)
-//                        .operator(Operator.AND)
-//                        .fuzziness(Fuzziness.ONE)
-//                        .prefixLength(3)
-//                )
-//                .build();
-
-//        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-//                .withQuery(new BoolQueryBuilder()
-//                        .must(QueryBuilders.matchQuery("title", keyword)
-//                                .operator(Operator.AND).fuzziness(Fuzziness.ONE).prefixLength(3))
-//                        .must(QueryBuilders.matchQuery("content", keyword)
-//                                .operator(Operator.AND).fuzziness(Fuzziness.ONE).prefixLength(3))
-//
-//
-//                )
-//                .build();
-
-
         MultiMatchQueryBuilder fuzzyMmQueryBuilder = multiMatchQuery(keyword, "title", "content")
                                                         .operator(Operator.AND)
                                                         .fuzziness(Fuzziness.ONE)
@@ -88,9 +68,8 @@ public class PostElasticServiceImpl implements PostElasticService {
             posts.add(hit.getContent());
         });
         logger.log(LogLevel.BUSINESS,
-                new CustomMessage(4, String.format("Searched posts by %s. Results found: %d", keyword, posts.size())));
+                new CustomMessage(4, String.format("Searched posts by '%s'. Results found: %d", keyword, posts.size())));
         return posts;
-//        return postRepository.findByTitleOrContentAllIgnoreCase(keyword);
     }
 
     @Override

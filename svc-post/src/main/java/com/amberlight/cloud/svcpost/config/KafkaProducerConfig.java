@@ -19,15 +19,13 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-//    public static final byte[] HEADER_COMMAND_SAVE = "SAVE".getBytes();
-
     public final static String X_COMMAND_SAVE = "SAVE";
 
     public final static String X_COMMAND_DELETE = "DELETE";
 
-    public static RecordHeader HEADER_COMMAND_SAVE = new RecordHeader("X-Command", X_COMMAND_SAVE.getBytes());
+    public final static RecordHeader HEADER_COMMAND_SAVE = new RecordHeader("X-Command", X_COMMAND_SAVE.getBytes());
 
-    public static RecordHeader HEADER_COMMAND_DELETE = new RecordHeader("X-Command", X_COMMAND_DELETE.getBytes());
+    public final static RecordHeader HEADER_COMMAND_DELETE = new RecordHeader("X-Command", X_COMMAND_DELETE.getBytes());
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
@@ -56,20 +54,5 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-
-
-//    @Bean
-//    public ProducerFactory<String, Post> producerPostFactory() {
-//        return new DefaultKafkaProducerFactory<>(producerConfigs());
-//    }
-//
-//    @Bean
-//    public KafkaTemplate<String, Post> kafkaPostTemplate() {
-//        KafkaTemplate<String, Post> template = new KafkaTemplate<>(producerPostFactory());
-//        template.setMessageConverter(new StringJsonMessageConverter());
-//        return template;
-//    }
-
-
 
 }
