@@ -1,16 +1,5 @@
 package com.amberlight.spring.cloud.gateway;
 
-import com.amberlight.cloud.gateway.client.post.Post;
-import io.restassured.RestAssured;
-import io.restassured.authentication.FormAuthConfig;
-import io.restassured.config.RedirectConfig;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.http.HttpStatus;
-
 import static io.restassured.RestAssured.config;
 
 public class LiveTest {
