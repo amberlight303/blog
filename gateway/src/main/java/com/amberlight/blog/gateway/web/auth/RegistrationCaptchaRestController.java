@@ -9,7 +9,8 @@ import com.amberlight.blog.gateway.auth.service.IUserService;
 import com.amberlight.blog.gateway.dto.auth.UserDto;
 import com.amberlight.blog.gateway.util.GenericResponse;
 import com.amberlight.blog.struct.security.User;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,7 +22,8 @@ import javax.validation.Valid;
 
 @RestController
 public class RegistrationCaptchaRestController {
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+
+    private static final Logger logger = LogManager.getLogger(RegistrationCaptchaRestController.class);
 
     @Autowired
     private IUserService userService;
@@ -61,7 +63,7 @@ public class RegistrationCaptchaRestController {
     }
     
     private GenericResponse registerNewUserHandler(final UserDto accountDto, final HttpServletRequest request) {
-        LOGGER.debug("Registering user account with information: {}", accountDto);
+        logger.debug("Registering user account with information: {}", accountDto);
 
         final User registered = userService.registerNewUserAccount(accountDto);
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
