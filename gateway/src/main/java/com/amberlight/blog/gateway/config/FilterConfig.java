@@ -1,4 +1,4 @@
-package com.amberlight.blog.svcpost.config;
+package com.amberlight.blog.gateway.config;
 
 
 import com.amberlight.blog.struct.log4j2.ThreadLogContextFilter;

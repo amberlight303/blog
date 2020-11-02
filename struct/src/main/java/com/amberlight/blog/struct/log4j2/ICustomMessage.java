@@ -1,4 +1,4 @@
-package com.amberlight.blog.svcpost.config.log4j2;
+package com.amberlight.blog.struct.log4j2;
 
 import org.apache.logging.log4j.message.Message;
 

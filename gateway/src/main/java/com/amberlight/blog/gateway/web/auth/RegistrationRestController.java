@@ -1,4 +1,4 @@
-package com.amberlight.blog.gateway.controller.auth;
+package com.amberlight.blog.gateway.web.auth;
 
 
 import com.amberlight.blog.gateway.dto.auth.PasswordDto;
@@ -12,7 +12,6 @@ import com.amberlight.blog.gateway.error.auth.InvalidOldPasswordException;
 import com.amberlight.blog.gateway.util.GenericResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;

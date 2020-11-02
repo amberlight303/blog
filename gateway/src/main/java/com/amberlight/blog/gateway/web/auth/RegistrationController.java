@@ -1,4 +1,4 @@
-package com.amberlight.blog.gateway.controller.auth;
+package com.amberlight.blog.gateway.web.auth;
 
 
 

@@ -1,7 +1,7 @@
 package com.amberlight.blog.svcpost.post.service;
 
-import com.amberlight.blog.svcpost.config.log4j2.CustomMessage;
-import com.amberlight.blog.svcpost.config.log4j2.LogLevel;
+import com.amberlight.blog.struct.log4j2.CustomMessage;
+import com.amberlight.blog.struct.log4j2.LogLevel;
 import com.amberlight.blog.svcpost.post.model.domain.Post;
 import com.amberlight.blog.svcpost.post.repository.elasticsearch.PostElasticRepository;
 import org.apache.logging.log4j.LogManager;

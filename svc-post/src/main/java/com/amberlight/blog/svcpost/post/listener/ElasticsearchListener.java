@@ -1,8 +1,8 @@
 package com.amberlight.blog.svcpost.post.listener;
 
 import com.amberlight.blog.svcpost.config.KafkaProducerConfig;
-import com.amberlight.blog.svcpost.config.log4j2.CustomMessage;
-import com.amberlight.blog.svcpost.config.log4j2.LogLevel;
+import com.amberlight.blog.struct.log4j2.CustomMessage;
+import com.amberlight.blog.struct.log4j2.LogLevel;
 import com.amberlight.blog.svcpost.post.model.domain.Post;
 import com.amberlight.blog.svcpost.post.service.PostElasticService;
 import com.fasterxml.jackson.core.JsonProcessingException;

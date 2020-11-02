@@ -1,12 +1,10 @@
 package com.amberlight.blog.svcpost.post.web;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 import com.amberlight.blog.struct.exception.BusinessLogicException;
-import com.amberlight.blog.svcpost.config.log4j2.CustomMessage;
-import com.amberlight.blog.svcpost.config.log4j2.LogLevel;
+import com.amberlight.blog.struct.log4j2.CustomMessage;
+import com.amberlight.blog.struct.log4j2.LogLevel;
 import com.amberlight.blog.svcpost.post.model.domain.Post;
 import com.amberlight.blog.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.blog.svcpost.post.service.PostElasticService;
@@ -17,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,13 +40,12 @@ public class PostController {
     @GetMapping("/test")
     public String test() {
 
-        logger.log(LogLevel.DIAG, new CustomMessage(1, "TEST TEXT FROM TEST METHOD"));
+        logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
 
-        return "hello boi, this is test";
+//        return "hello boi, this is test";
 
-//        throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
+        throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
-
 
     @GetMapping
     public List<Post> findAllPosts() {

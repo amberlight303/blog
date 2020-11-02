@@ -1,7 +1,8 @@
-package com.amberlight.blog.svcpost.config.log4j2;
+package com.amberlight.blog.struct.log4j2;
 
 
-import com.amberlight.blog.svcpost.config.util.Util;
+
+import com.amberlight.blog.struct.util.Util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.Layout;

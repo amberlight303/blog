@@ -1,11 +1,10 @@
-package com.amberlight.blog.svcpost.post.web;
+package com.amberlight.blog.gateway.web;
 
-import com.amberlight.blog.struct.util.HttpUtil;
+import com.amberlight.blog.struct.dto.ErrorDto;
 import com.amberlight.blog.struct.exception.BusinessLogicException;
 import com.amberlight.blog.struct.exception.ServerException;
-import com.amberlight.blog.struct.dto.ErrorDto;
 import com.amberlight.blog.struct.log4j2.CustomMessage;
-import com.amberlight.blog.svcpost.post.service.PostServiceImpl;
+import com.amberlight.blog.struct.util.HttpUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;

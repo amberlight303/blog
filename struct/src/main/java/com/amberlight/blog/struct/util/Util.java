@@ -1,4 +1,4 @@
-package com.amberlight.blog.svcpost.config.util;
+package com.amberlight.blog.struct.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.time.FastDateFormat;
