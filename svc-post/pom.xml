@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.amberlight</groupId>
+        <groupId>com.amberlight.blog</groupId>
         <artifactId>blog</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
