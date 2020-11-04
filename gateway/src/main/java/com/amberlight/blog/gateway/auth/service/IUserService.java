@@ -7,7 +7,7 @@ package com.amberlight.blog.gateway.auth.service;
 import com.amberlight.blog.struct.security.NewLocationToken;
 import com.amberlight.blog.struct.security.PasswordResetToken;
 import com.amberlight.blog.gateway.dto.auth.UserDto;
-import com.amberlight.blog.gateway.error.auth.UserAlreadyExistException;
+import com.amberlight.blog.struct.security.auth.UserAlreadyExistException;
 import com.amberlight.blog.struct.security.User;
 import com.amberlight.blog.struct.security.VerificationToken;
 

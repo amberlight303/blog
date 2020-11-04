@@ -1,8 +1,8 @@
 package com.amberlight.blog.gateway.auth.captcha;
 
 
-import com.amberlight.blog.gateway.error.auth.ReCaptchaUnavailableException;
-import com.amberlight.blog.gateway.error.auth.ReCaptchaInvalidException;
+import com.amberlight.blog.struct.security.auth.ReCaptchaUnavailableException;
+import com.amberlight.blog.struct.security.auth.ReCaptchaInvalidException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

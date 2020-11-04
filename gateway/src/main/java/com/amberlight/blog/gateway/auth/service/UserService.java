@@ -3,7 +3,7 @@ package com.amberlight.blog.gateway.auth.service;
 
 import com.amberlight.blog.gateway.auth.persistence.dao.*;
 import com.amberlight.blog.gateway.dto.auth.UserDto;
-import com.amberlight.blog.gateway.error.auth.UserAlreadyExistException;
+import com.amberlight.blog.struct.security.auth.UserAlreadyExistException;
 import com.amberlight.blog.struct.security.*;
 import com.maxmind.geoip2.DatabaseReader;
 import org.springframework.beans.factory.annotation.Autowired;

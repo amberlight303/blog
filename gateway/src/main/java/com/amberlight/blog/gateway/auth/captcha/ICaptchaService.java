@@ -1,7 +1,7 @@
 package com.amberlight.blog.gateway.auth.captcha;
 
 
-import com.amberlight.blog.gateway.error.auth.ReCaptchaInvalidException;
+import com.amberlight.blog.struct.security.auth.ReCaptchaInvalidException;
 
 public interface ICaptchaService {
     

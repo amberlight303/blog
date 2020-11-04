@@ -3,13 +3,13 @@ package com.amberlight.blog.gateway.web.auth;
 
 import com.amberlight.blog.gateway.dto.auth.PasswordDto;
 import com.amberlight.blog.gateway.dto.auth.UserDto;
+import com.amberlight.blog.struct.exception.BusinessLogicException;
 import com.amberlight.blog.struct.security.User;
 import com.amberlight.blog.struct.security.VerificationToken;
 import com.amberlight.blog.gateway.auth.registration.OnRegistrationCompleteEvent;
 import com.amberlight.blog.gateway.auth.security.security.ISecurityUserService;
 import com.amberlight.blog.gateway.auth.service.IUserService;
-import com.amberlight.blog.gateway.error.auth.InvalidOldPasswordException;
-import com.amberlight.blog.gateway.util.GenericResponse;
+import com.amberlight.blog.struct.security.auth.InvalidOldPasswordException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,71 +60,66 @@ public class RegistrationRestController {
 
     // Registration
     @PostMapping("/user/registration")
-    public GenericResponse registerUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
+    public void registerUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         logger.debug("Registering user account with information: {}", accountDto);
         final User registered = userService.registerNewUserAccount(accountDto);
         userService.addUserLocation(registered, getClientIP(request));
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
-        return new GenericResponse("success");
     }
 
     // User activation - verification
     @GetMapping("/user/resendRegistrationToken")
-    public GenericResponse resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
+    public void resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
         final VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
         final User user = userService.getUser(newToken.getToken());
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
-        return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
     }
 
     // Reset password
     @PostMapping("/user/resetPassword")
-    public GenericResponse resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) {
+    public void resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) {
         final User user = userService.findUserByEmail(userEmail);
         if (user != null) {
             final String token = UUID.randomUUID().toString();
             userService.createPasswordResetTokenForUser(user, token);
             mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
         }
-        return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
     }
 
     // Save password
     @PostMapping("/user/savePassword")
-    public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
+    public void savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
 
         final String result = securityUserService.validatePasswordResetToken(passwordDto.getToken());
 
         if(result != null) {
-            return new GenericResponse(messages.getMessage("auth.message." + result, null, locale));
+            throw new BusinessLogicException(messages.getMessage("auth.message." + result, null, locale));
         }
 
         Optional<User> user = userService.getUserByPasswordResetToken(passwordDto.getToken());
         if(user.isPresent()) {
             userService.changeUserPassword(user.get(), passwordDto.getNewPassword());
-            return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
         } else {
-            return new GenericResponse(messages.getMessage("auth.message.invalid", null, locale));
+            throw new BusinessLogicException(messages.getMessage("auth.message.invalid", null, locale));
         }
     }
 
     // Change user password
     @PostMapping("/user/updatePassword")
-    public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
+    public void changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
         final User user = userService.findUserByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
         if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
             throw new InvalidOldPasswordException();
         }
         userService.changeUserPassword(user, passwordDto.getNewPassword());
-        return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
     }
 
     // Change user 2 factor authentication
     @PostMapping("/user/update/2fa")
-    public GenericResponse modifyUser2FA(@RequestParam("use2FA") final boolean use2FA) throws UnsupportedEncodingException {
+    public String modifyUser2FA(@RequestParam("use2FA") final boolean use2FA) throws UnsupportedEncodingException {
         final User user = userService.updateUser2FA(use2FA);
         if (use2FA) {
-            return new GenericResponse(userService.generateQRUrl(user));
+            return userService.generateQRUrl(user);
         }
         return null;
     }

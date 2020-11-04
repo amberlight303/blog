@@ -1,8 +1,8 @@
-package com.amberlight.blog.gateway.error.auth;
+package com.amberlight.blog.struct.security.auth;
 
-public final class UserNotFoundException extends RuntimeException {
+import com.amberlight.blog.struct.exception.BusinessLogicException;
 
-    private static final long serialVersionUID = 5861310537366287163L;
+public final class UserNotFoundException extends BusinessLogicException {
 
     public UserNotFoundException() {
         super();

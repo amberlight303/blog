@@ -4,7 +4,7 @@ package com.amberlight.blog.gateway.auth.security.security.location;
 
 import com.amberlight.blog.struct.security.NewLocationToken;
 import com.amberlight.blog.gateway.auth.service.IUserService;
-import com.amberlight.blog.gateway.error.auth.UnusualLocationException;
+import com.amberlight.blog.struct.security.auth.UnusualLocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;

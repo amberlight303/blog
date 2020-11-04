@@ -7,7 +7,6 @@ import com.amberlight.blog.gateway.auth.captcha.ICaptchaService;
 import com.amberlight.blog.gateway.auth.registration.OnRegistrationCompleteEvent;
 import com.amberlight.blog.gateway.auth.service.IUserService;
 import com.amberlight.blog.gateway.dto.auth.UserDto;
-import com.amberlight.blog.gateway.util.GenericResponse;
 import com.amberlight.blog.struct.security.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,31 +41,24 @@ public class RegistrationCaptchaRestController {
 
     // Registration
     @PostMapping("/user/registrationCaptcha")
-    public GenericResponse captchaRegisterUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
-
+    public void captchaRegisterUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         final String response = request.getParameter("g-recaptcha-response");
         captchaService.processResponse(response);
-
-        return registerNewUserHandler(accountDto, request);
+        registerNewUserHandler(accountDto, request);
     }
-
     
     // Registration reCaptchaV3
     @PostMapping("/user/registrationCaptchaV3")
-    public GenericResponse captchaV3RegisterUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
-
+    public void captchaV3RegisterUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         final String response = request.getParameter("response");
         captchaServiceV3.processResponse(response, CaptchaServiceV3.REGISTER_ACTION);
-
-        return registerNewUserHandler(accountDto, request);
+        registerNewUserHandler(accountDto, request);
     }
     
-    private GenericResponse registerNewUserHandler(final UserDto accountDto, final HttpServletRequest request) {
+    private void registerNewUserHandler(final UserDto accountDto, final HttpServletRequest request) {
         logger.debug("Registering user account with information: {}", accountDto);
-
         final User registered = userService.registerNewUserAccount(accountDto);
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
-        return new GenericResponse("success");
     }
     
 
