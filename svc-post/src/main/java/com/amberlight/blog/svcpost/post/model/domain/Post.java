@@ -36,16 +36,4 @@ public class Post implements Serializable {
 
     private Date modifiedDate;
 
-//    public PostDto toDto() {
-//        final PostDto dto = new PostDto();
-//        dto.setId(this.id);
-//        dto.setUserId(this.userId);
-//        dto.setTitle(this.title);
-//        dto.setPreviewContent(this.previewContent);
-//        dto.setContent(this.content);
-//        dto.setCreatedDate(LocalDateTime.parse(this.createdDate));
-//        dto.setModifiedDate(LocalDateTime.parse(this.modifiedDate));
-//        return dto;
-//    }
-
 }

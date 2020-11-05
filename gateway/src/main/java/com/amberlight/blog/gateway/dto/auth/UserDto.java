@@ -4,7 +4,7 @@ package com.amberlight.blog.gateway.dto.auth;
 
 
 import com.amberlight.blog.gateway.auth.validation.PasswordMatches;
-import com.amberlight.blog.gateway.auth.validation.ValidEmail;
+import com.amberlight.blog.struct.validation.ValidEmail;
 import com.amberlight.blog.gateway.auth.validation.ValidPassword;
 
 import javax.validation.constraints.NotNull;
@@ -14,11 +14,11 @@ import javax.validation.constraints.Size;
 public class UserDto {
 
     @NotNull
-    @Size(min = 1, message = "{Size.userDto.firstName}")
+    @Size(min = 1, max = 20)
     private String firstName;
 
     @NotNull
-    @Size(min = 1, message = "{Size.userDto.lastName}")
+    @Size(min = 1, max = 20)
     private String lastName;
 
     @ValidPassword
@@ -30,7 +30,7 @@ public class UserDto {
 
     @ValidEmail
     @NotNull
-    @Size(min = 1, message = "{Size.userDto.email}")
+    @Size(min = 1)
     private String email;
 
     private boolean isUsing2FA;
@@ -95,18 +95,15 @@ public class UserDto {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("UserDto [firstName=")
-                .append(firstName)
-                .append(", lastName=")
-                .append(lastName)
-                .append(", email=")
-                .append(email)
-                .append(", isUsing2FA=")
-                .append(isUsing2FA)
-                .append(", role=")
-                .append(role).append("]");
-        return builder.toString();
+        return "UserDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", matchingPassword='" + matchingPassword + '\'' +
+                ", email='" + email + '\'' +
+                ", isUsing2FA=" + isUsing2FA +
+                ", role=" + role +
+                '}';
     }
 
 }

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,16 +42,20 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(value = BindException.class)
     protected ResponseEntity<ErrorDto> handleBindException(BindException ex, WebRequest request) {
         logger.error(new CustomMessage(ex.getMessage()), ex);
+        final BindingResult result = ex.getBindingResult();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(defaultHeaders)
-                .body(new ErrorDto("Wrong binding."));
+                .body(new ErrorDto(result.getAllErrors(),
+                        String.format("Wrong binding. Invalid %s.", result.getObjectName())));
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
                                                                              WebRequest request) {
         logger.error(new CustomMessage(ex.getMessage()), ex);
+        final BindingResult result = ex.getBindingResult();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(defaultHeaders)
-                .body(new ErrorDto("Method argument not valid."));
+                .body(new ErrorDto(result.getAllErrors(),
+                        String.format("Method argument is not valid. Invalid %s.", result.getObjectName())));
     }
 
     @ExceptionHandler(value = InvalidOldPasswordException.class)

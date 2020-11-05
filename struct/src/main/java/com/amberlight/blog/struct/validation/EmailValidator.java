@@ -1,4 +1,4 @@
-package com.amberlight.blog.gateway.auth.validation;
+package com.amberlight.blog.struct.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

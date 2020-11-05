@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,24 +22,19 @@ public class PostDto {
 
     private Long userId;
 
+    @NotNull
+    @Size(min = 3, max = 100)
     private String title;
 
+    @Size(min = 1, max = 1000)
     private String previewContent;
 
+    @NotNull
+    @Size(min = 1, max = 5000)
     private String content;
 
     private LocalDateTime createdDate;
 
     private LocalDateTime modifiedDate;
-
-//    public PostDto(Post post) {
-//        this.id = post.getId();
-//        this.userId = post.getUserId();
-//        this.title = post.getTitle();
-//        this.previewContent = post.getPreviewContent();
-//        this.content = post.getContent();
-//        this.createdDate = LocalDateTime.parse(post.getCreatedDate());
-//        this.modifiedDate = LocalDateTime.parse(post.getModifiedDate());
-//    }
 
 }

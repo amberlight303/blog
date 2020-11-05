@@ -2,7 +2,7 @@ package com.amberlight.blog.gateway.config;
 
 
 
-import com.amberlight.blog.gateway.auth.validation.EmailValidator;
+import com.amberlight.blog.struct.validation.EmailValidator;
 import com.amberlight.blog.gateway.auth.validation.PasswordMatchesValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

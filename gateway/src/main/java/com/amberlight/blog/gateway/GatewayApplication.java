@@ -22,7 +22,8 @@ import java.util.List;
 @EnableZuulProxy
 @EnableEurekaClient
 @EnableFeignClients
-@EntityScan(basePackages = {"com.amberlight.blog.gateway", "com.amberlight.blog.struct.security"})
+@EntityScan(basePackages = {"com.amberlight.blog.gateway", "com.amberlight.blog.struct.security",
+                            "com.amberlight.blog.struct.validation"})
 public class GatewayApplication {
 
     public static void main(String[] args) {

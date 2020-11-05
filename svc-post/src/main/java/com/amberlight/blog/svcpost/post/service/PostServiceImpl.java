@@ -10,6 +10,7 @@ import com.amberlight.blog.svcpost.config.KafkaProducerConfig;
 import com.amberlight.blog.struct.log4j2.CustomMessage;
 import com.amberlight.blog.struct.log4j2.LogLevel;
 import com.amberlight.blog.svcpost.post.model.domain.Post;
+import com.amberlight.blog.svcpost.post.model.dto.PostDto;
 import com.amberlight.blog.svcpost.post.repository.mongodb.PostMongoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +32,6 @@ public class PostServiceImpl implements PostService {
     @Value(value = "${kafka.topic.elasticsearch.name}")
     private String kafkaElasticsearchTopic;
 
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -40,9 +40,6 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostMongoRepository postRepository;
-
-    @Autowired
-    private PostElasticService postElasticService;
 
     @Override
     public List<Post> findAllPosts() {
@@ -57,7 +54,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post createPost(Post post) throws JsonProcessingException {
+    public Post createPost(PostDto post) throws JsonProcessingException {
         Post newPost =  new Post();
         newPost.setUserId(post.getUserId());
         newPost.setTitle(post.getTitle());
@@ -90,12 +87,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(Post post, String postId, Long userId) throws JsonProcessingException {
+    public Post updatePost(PostDto post, String postId) throws JsonProcessingException {
         Optional<Post> dbPost = postRepository.findById(postId);
         if (dbPost.isPresent()) {
-            if (!dbPost.get().getUserId().equals(userId))
+            if (!dbPost.get().getUserId().equals(post.getUserId()))
                 throw new BusinessLogicException(-2, "Access to the operation denied");
             Post postForUpdate =  new Post();
+            postForUpdate.setId(postId);
             postForUpdate.setUserId(dbPost.get().getUserId());
             postForUpdate.setTitle(post.getTitle());
             postForUpdate.setPreviewContent(post.getPreviewContent());
@@ -108,12 +106,9 @@ public class PostServiceImpl implements PostService {
             ProducerRecord<String, String> savePostRecord = new ProducerRecord<>(kafkaElasticsearchTopic, null,
                     updatedPost.getId(), objectMapper.writeValueAsString(updatedPost), headers);
             kafkaTemplate.send(savePostRecord);
-
-
             logger.log(LogLevel.BUSINESS, new CustomMessage(2, "Post updated"));
             return updatedPost;
         } else {
-            // todo: put logEventId in exception
             throw new BusinessLogicException(-1, "Post doesn't exist");
         }
     }
