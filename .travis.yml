@@ -1,0 +1,43 @@
+dist: bionic
+sudo: required
+
+services:
+  - docker
+
+language: java
+jdk: oraclejdk11
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::7}
+
+after_success:
+#  - bash <(curl -s https://codecov.io/bash)
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+  #TAG
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+
+  # CONFIG SERVICE
+  - export CONFIG=amberlight303/blog-config
+  - docker build -t $CONFIG:$COMMIT ./config
+  - docker tag $CONFIG:$COMMIT $CONFIG:$TAG
+  - docker push $CONFIG
+
+  # DISCOVERY
+  - export DISCOVERY=amberlight303/blog-discovery
+  - docker build -t $DISCOVERY:$COMMIT ./discovery
+  - docker tag $DISCOVERY:$COMMIT $DISCOVERY:$TAG
+  - docker push $DISCOVERY
+
+  # GATEWAY
+  - export GATEWAY=amberlight303/blog-gateway
+  - docker build -t $GATEWAY:$COMMIT ./gateway
+  - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
+  - docker push $GATEWAY
+
+  # POST SERVICE
+  - export SVC_POST=amberlight303/blog-svc-post
+  - docker build -t $SVC_POST:$COMMIT ./svc-post
+  - docker tag $SVC_POST:$COMMIT $SVC_POST:$TAG
+  - docker push $SVC_POST
