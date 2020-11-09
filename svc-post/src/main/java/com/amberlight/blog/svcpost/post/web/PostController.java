@@ -48,7 +48,7 @@ public class PostController {
 
         logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
 
-//        return "hello boi, this is test";
+//        return "hello boi, this is test!";
 
         throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
