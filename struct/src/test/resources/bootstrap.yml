@@ -6,4 +6,5 @@
 #      uri: http://localhost:9081
 #      fail-fast: true
 #      username: configUser
-#      password: configPassword
+#      password: ${CONFIG_SERVICE_PASSWORD}
+##      password: configPassword

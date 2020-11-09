@@ -16,3 +16,5 @@ target/
 **/*.settings
 
 dev-application-config
+
+.env

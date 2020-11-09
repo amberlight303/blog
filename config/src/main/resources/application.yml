@@ -14,7 +14,8 @@ spring:
   security:
     user:
       name: configUser
-      password: configPassword
+      password: ${CONFIG_SERVICE_PASSWORD}
+      #      password: configPassword
 
 server:
   port: 9081
