@@ -12,7 +12,7 @@ import org.junit.Test;
 //@SpringBootTest(classes = DiscoveryApplication.class)
 public class SpringContextLiveTest {
 
-    @Test
+//    @Test
     public void whenSpringContextIsBootstrapped_thenNoExceptions() {
     }
 }

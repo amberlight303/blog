@@ -9,10 +9,9 @@ import org.junit.Test;
  *
  */
 //@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = BookServiceApplication.class)
 public class SpringContextLiveTest {
 
-    @Test
+//    @Test
     public void whenSpringContextIsBootstrapped_thenNoExceptions() {
     }
 }
