@@ -25,6 +25,6 @@ eureka:
   client:
     register-with-eureka: true
     serviceUrl:
-      defaultZone: http://discUser:discPassword@localhost:9082/eureka/
+      defaultZone: ${BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
 
 

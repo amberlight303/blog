@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+
+  config:
+    build: config
+    ports:
+      - 9081:9081
+
+  discovery:
+    build: discovery
+#    ports:
+#      - 9082:9082
+
+  gateway:
+    build: gateway
+#    ports:
+#      - 9080:9080
+
+  svc-post:
+    build: svc-post
+    ports:
+      - 9083:9083
