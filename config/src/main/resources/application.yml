@@ -13,9 +13,8 @@ spring:
      active: native
   security:
     user:
-      name: configUser
-      password: ${CONFIG_SERVICE_PASSWORD}
-      #      password: configPassword
+      name: ${BLOG_CONFIG_SERVICE_USERNAME}
+      password: ${BLOG_CONFIG_SERVICE_PASSWORD}
 
 server:
   port: 9081
