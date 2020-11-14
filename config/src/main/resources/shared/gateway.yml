@@ -13,8 +13,9 @@ security:
 session:
   maxInactiveIntervalInSeconds: 86400
 
-logging:
-  config: classpath:/shared/gateway-log4j2.xml
+#logging:
+##  config: classpath:/gateway-log4j2.xml
+#  config: ${BLOG_SPRING_CLOUD_CONFIG_URI}/gateway/log4j2/shared
 
 
 kafka:

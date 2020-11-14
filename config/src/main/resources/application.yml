@@ -8,6 +8,9 @@ spring:
       server:
         native:
           search-locations: classpath:/shared
+          searchPaths:
+            - '{application}'
+            - shared
       enabled: true
   profiles:
      active: native
