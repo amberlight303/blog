@@ -1,0 +1,24 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: ${BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
+
+spring:
+  redis:
+    host: ${BLOG_REDIS_HOST}
+    port: ${BLOG_REDIS_PORT}
+    password: ${BLOG_REDIS_PASSWORD}
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    default-property-inclusion: non_null

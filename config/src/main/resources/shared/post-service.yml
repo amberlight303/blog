@@ -1,0 +1,44 @@
+server:
+  port: 9083
+
+spring:
+  session:
+    store-type: redis
+  datasource:
+    url: ${BLOG_POSTGRESQL_URL}
+    username: ${BLOG_POSTGRESQL_USERNAME}
+    password: ${BLOG_POSTGRESQL_PASSWORD}
+  jpa:
+    show-sql: false
+  data:
+    mongodb:
+      host: ${BLOG_MONGODB_HOST}
+      port: ${BLOG_MONGODB_PORT}
+      username: ${BLOG_MONGODB_USERNAME}
+      password: ${BLOG_MONGODB_PASSWORD}
+      authentication-database: ${BLOG_MONGODB_AUTHENTICATION_DATABASE}
+      database: ${BLOG_MONGODB_DATABASE}
+    elasticsearch:
+      cluster-name: ${BLOG_ELASTICSEARCH_CLUSTER_NAME}
+      cluster-nodes: ${BLOG_ELASTICSEARCH_CLUSTER_NODES}
+
+logging:
+  config: classpath:/shared/post-service-log4j2.xml
+
+elastic-client:
+  timeout: 30000
+  host: ${BLOG_ELASTICSEARCH_HOST}
+  port: ${BLOG_ELASTICSEARCH_PORT}
+  schema: http
+
+
+kafka:
+  bootstrapAddress: ${BLOG_KAFKA_BOOTSTRAP_ADDRESS}
+  topic:
+    elasticsearch:
+      name: elasticsearch
+    post-svc-log:
+      name: post-svc-log
+  consumersGroup:
+    elasticsearch:
+      groupId: elasticsearch-group

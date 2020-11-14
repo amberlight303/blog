@@ -1,0 +1,10 @@
+server:
+  port: 9082
+
+spring:
+  session:
+    store-type: none
+
+logging:
+  config: classpath:/shared/discovery-log4j2.xml
+

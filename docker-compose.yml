@@ -6,7 +6,7 @@ services:
       BLOG_CONFIG_SERVICE_USERNAME: $BLOG_CONFIG_SERVICE_USERNAME
       BLOG_CONFIG_SERVICE_PASSWORD: $BLOG_CONFIG_SERVICE_PASSWORD
       BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: $BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
-    image: amberlight303/blog-config
+    image: amberlight303/blog-config:latest
     restart: always
     logging:
       options:
@@ -22,13 +22,13 @@ services:
       BLOG_REDIS_PORT: $BLOG_REDIS_PORT
       BLOG_REDIS_PASSWORD: $BLOG_REDIS_PASSWORD
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
-    image: amberlight303/blog-discovery
+    image: amberlight303/blog-discovery:latest
     restart: always
 #    depends_on:
 #      config:
 #        condition: service_healthy
     ports:
-      - "127.0.0.1:9082:9082"
+      - "9082:9082"
     logging:
       options:
         max-size: "10m"
@@ -62,13 +62,13 @@ services:
       BLOG_GOOGLE_RECAPTCHA_KEY_SITE: $BLOG_GOOGLE_RECAPTCHA_KEY_SITE
       BLOG_GOOGLE_RECAPTCHA_KEY_SECRET: $BLOG_GOOGLE_RECAPTCHA_KEY_SECRET
       BLOG_REMEMBER_ME_SERVICE_KEY: $BLOG_REMEMBER_ME_SERVICE_KEY
-    image: amberlight303/blog-gateway
+    image: amberlight303/blog-gateway:latest
     restart: always
 #    depends_on:
 #      config:
 #        condition: service_healthy
     ports:
-      - "127.0.0.1:9080:9080"
+      - "9080:9080"
     logging:
       options:
         max-size: "10m"
@@ -99,7 +99,7 @@ services:
       BLOG_ELASTICSEARCH_CLUSTER_NAME: $BLOG_ELASTICSEARCH_CLUSTER_NAME
       BLOG_ELASTICSEARCH_CLUSTER_NODES: $BLOG_ELASTICSEARCH_CLUSTER_NODES
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
-    image: amberlight303/blog-svc-post
+    image: amberlight303/blog-svc-post:latest
     restart: always
 #    depends_on:
 #      config:

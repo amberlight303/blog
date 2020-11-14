@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <CustomLevels>
+        <CustomLevel name="BUSINESS" intLevel="5" />
+        <CustomLevel name="DIAG" intLevel="10" />
+    </CustomLevels>
+    <Appenders>
+        <Kafka name="Kafka" topic="gateway-log">
+            <CustomJsonLayout/>
+            <Property name="bootstrap.servers">127.0.0.1:9092</Property>
+            <ThresholdFilter level="ERROR"/>
+        </Kafka>
+        <Async name="Async">
+            <AppenderRef ref="Kafka"/>
+        </Async>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5p | PTRID:%X{PTRID} LRID:%X{LRID} UID:%X{UID} | [%-7t] %F:%L - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="stdout"/>
+        </Root>
+        <Logger name="com.amberlight.blog" level="DEBUG" additivity="false">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="Kafka"/>
+        </Logger>
+    </Loggers>
+</Configuration>

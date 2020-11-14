@@ -4,19 +4,19 @@ services:
   config:
     build: config
     ports:
-      - "127.0.0.1:9081:9081"
+      - "9081:9081"
 
   discovery:
     build: discovery
 #    ports:
-#      - "127.0.0.1:9082:9082"
+#      - "9082:9082"
 
   gateway:
     build: gateway
 #    ports:
-#      - "127.0.0.1:9080:9080"
+#      - "9080:9080"
 
   svc-post:
     build: svc-post
     ports:
-      - "127.0.0.1:9083:9083"
+      - "9083:9083"

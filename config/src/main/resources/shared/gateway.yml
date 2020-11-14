@@ -1,0 +1,99 @@
+server:
+  port: 9080
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+
+security:
+  rememberme:
+    key: ${BLOG_REMEMBER_ME_SERVICE_KEY}
+
+session:
+  maxInactiveIntervalInSeconds: 86400
+
+logging:
+  config: classpath:/shared/gateway-log4j2.xml
+
+
+kafka:
+  bootstrapAddress: ${BLOG_KAFKA_BOOTSTRAP_ADDRESS}
+  topic:
+    gateway-log:
+      name: gateway-log
+
+spring:
+  session:
+    store-type: redis
+  redis:
+    namespace: spring:session
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: ${BLOG_POSTGRESQL_URL}
+    username: ${BLOG_POSTGRESQL_USERNAME}
+    password: ${BLOG_POSTGRESQL_PASSWORD}
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+  jpa:
+    show-sql: false
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    protocol: smtps
+    username: ${BLOG_SUPPORT_MAIL}
+    password: ${BLOG_SUPPORT_MAIL_PASSWORD}
+    properties:
+      mail:
+        transport:
+          protocol: smtps
+        smtps:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 8000
+
+support:
+  email: ${BLOG_SUPPORT_MAIL}
+
+google:
+  recaptcha:
+    key:
+      site: ${BLOG_GOOGLE_RECAPTCHA_KEY_SITE}
+      secret: ${BLOG_GOOGLE_RECAPTCHA_KEY_SECRET}
+      threshold: 0.5
+
+zuul:
+  routes:
+    post-service:
+      path: /post-service/**
+      sensitive-headers:
+#    discovery:
+#      path: /discovery/**
+#      url: http://discovery:9082
+#      sensitive-headers:
+
+hystrix:
+  command:
+    post-service:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 600000
+    discovery:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 600000
+
+geo:
+  ip:
+    lib:
+      enabled: false
+
+# 5 AM every day
+purge:
+  cron:
+    expression: 0 0 5 * * ?
