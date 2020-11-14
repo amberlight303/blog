@@ -33,6 +33,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 @EnableWebSecurity
@@ -117,9 +118,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name="GeoIPCountry")
     public DatabaseReader databaseReader() throws IOException, GeoIp2Exception {
-        File database = ResourceUtils
-                .getFile("classpath:maxmind/GeoLite2-Country.mmdb");
-        return new DatabaseReader.Builder(database)
+//        File database = ResourceUtils
+//                .getFile("classpath:maxmind/GeoLite2-Country.mmdb");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/maxmind/GeoLite2-Country.mmdb");
+        return new DatabaseReader.Builder(inputStream)
                 .build();
     }
 

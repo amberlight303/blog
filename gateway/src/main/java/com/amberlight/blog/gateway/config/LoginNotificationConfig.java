@@ -8,6 +8,7 @@ import ua_parser.Parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class LoginNotificationConfig {
@@ -19,9 +20,10 @@ public class LoginNotificationConfig {
 
     @Bean(name="GeoIPCity")
     public DatabaseReader databaseReader() throws IOException {
-        File database = ResourceUtils
-                .getFile("classpath:maxmind/GeoLite2-City.mmdb");
-        return new DatabaseReader.Builder(database)
+//        File database = ResourceUtils
+//                .getFile("classpath:maxmind/GeoLite2-City.mmdb");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/maxmind/GeoLite2-City.mmdb");
+        return new DatabaseReader.Builder(inputStream)
                 .build();
     }
 }
