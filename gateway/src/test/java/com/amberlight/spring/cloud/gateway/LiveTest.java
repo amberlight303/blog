@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.config;
 
 public class LiveTest {
 //
-//    private final String ROOT_URI = "http://localhost:8080";
+//    private final String ROOT_URI = "http://127.0.0.1:8080";
 //    private final FormAuthConfig formConfig = new FormAuthConfig("/login", "username", "password");
 //
 //    @Before
@@ -24,7 +24,7 @@ public class LiveTest {
 //    public void whenAccessProtectedResourceWithoutLogin_thenRedirectToLogin() {
 //        final Response response = RestAssured.get(ROOT_URI + "/home/index.html");
 //        Assert.assertEquals(HttpStatus.FOUND.value(), response.getStatusCode());
-//        Assert.assertEquals("http://localhost:8080/login", response.getHeader("Location"));
+//        Assert.assertEquals("http://127.0.0.1:8080/login", response.getHeader("Location"));
 //    }
 //
 //    @Test
