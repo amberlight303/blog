@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: post-service
-  cloud:
-    config:
-      uri: ${BLOG_SPRING_CLOUD_CONFIG_URI}
-      fail-fast: true
-      username: ${BLOG_CONFIG_SERVICE_USERNAME}
-      password: ${BLOG_CONFIG_SERVICE_PASSWORD}

@@ -22,10 +22,6 @@ spring:
       cluster-name: ${BLOG_ELASTICSEARCH_CLUSTER_NAME}
       cluster-nodes: ${BLOG_ELASTICSEARCH_CLUSTER_NODES}
 
-#logging:
-##  config: classpath:/post-service-log4j2.xml
-#  config: ${BLOG_SPRING_CLOUD_CONFIG_URI}/post-service/log4j2/shared
-
 elastic-client:
   timeout: 30000
   host: ${BLOG_ELASTICSEARCH_HOST}

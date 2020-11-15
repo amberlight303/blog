@@ -25,4 +25,5 @@ public class CaptchaConfig {
         RestTemplate restTemplate = new RestTemplate(this.clientHttpRequestFactory());
         return restTemplate;
     }
+
 }

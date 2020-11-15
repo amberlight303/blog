@@ -25,9 +25,11 @@ public class ErrorDto {
         this.error = error;
         String temp = allErrors.stream().map(e -> {
             if (e instanceof FieldError) {
-                return "{\"field\":\"" + ((FieldError) e).getField() + "\",\"defaultMessage\":\"" + e.getDefaultMessage() + "\"}";
+                return "{\"field\":\"" + ((FieldError) e).getField() + "\",\"defaultMessage\":\""
+                        + e.getDefaultMessage() + "\"}";
             } else {
-                return "{\"object\":\"" + e.getObjectName() + "\",\"defaultMessage\":\"" + e.getDefaultMessage() + "\"}";
+                return "{\"object\":\"" + e.getObjectName() + "\",\"defaultMessage\":\""
+                        + e.getDefaultMessage() + "\"}";
             }
         }).collect(Collectors.joining(","));
         this.message = "[" + temp + "]";

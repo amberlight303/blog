@@ -34,7 +34,8 @@ public class ElasticsearchListener {
             topics = "${kafka.topic.elasticsearch.name}",
             groupId = "${kafka.consumersGroup.elasticsearch.groupId}"
     )
-    public void receive(@Payload String data, @Header("X-Command") String commandHeader) throws JsonProcessingException {
+    public void receive(@Payload String data,
+                        @Header("X-Command") String commandHeader) throws JsonProcessingException {
         ThreadContext.put("LRID", UUID.randomUUID().toString());
         if (commandHeader == null) throw new IllegalStateException("X-Command header cannot be null");
         if (data == null) throw new IllegalStateException("Data cannot be null");

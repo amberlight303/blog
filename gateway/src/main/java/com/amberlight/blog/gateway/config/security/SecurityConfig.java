@@ -123,7 +123,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name="GeoIPCountry")
     public DatabaseReader databaseReader() throws IOException, GeoIp2Exception {
-        Resource resource = resourceLoader.getResource("classpath:maxmind/GeoLite2-Country.mmdb");
+        Resource resource = resourceLoader.getResource("classpath:maxmind" + File.separator + "GeoLite2-Country.mmdb");
         InputStream inputStream = resource.getInputStream();
         return new DatabaseReader.Builder(inputStream)
                 .build();

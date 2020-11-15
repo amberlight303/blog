@@ -4,12 +4,3 @@ server:
 spring:
   session:
     store-type: none
-
-#logging:
-##  config: classpath:/discovery-log4j2.xml
-#  config: http://configUser:configPassword@127.0.0.1:9081/discovery/log4j2/shared
-
-#log4j2:
-#  configurationUserName: ${BLOG_CONFIG_SERVICE_USERNAME}
-#  configurationPassword: ${BLOG_CONFIG_SERVICE_PASSWORD}
-

@@ -1,12 +1,10 @@
 package com.amberlight.blog.svcpost.post.web;
 
-import java.security.Principal;
 import java.util.List;
 
 import com.amberlight.blog.struct.exception.BusinessLogicException;
 import com.amberlight.blog.struct.log4j2.CustomMessage;
 import com.amberlight.blog.struct.log4j2.LogLevel;
-import com.amberlight.blog.struct.security.User;
 import com.amberlight.blog.svcpost.post.model.domain.Post;
 import com.amberlight.blog.svcpost.post.model.dto.PostDto;
 import com.amberlight.blog.svcpost.post.service.IAuthenticationFacade;
@@ -18,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,7 +75,8 @@ public class PostController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PutMapping("/{postId}")
-    public Post updatePost(@RequestBody @Valid PostDto post, @PathVariable String postId) throws JsonProcessingException {
+    public Post updatePost(@RequestBody @Valid PostDto post,
+                           @PathVariable String postId) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
         return postService.updatePost(post, postId);
     }

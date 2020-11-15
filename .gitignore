@@ -15,4 +15,4 @@ target/
 **/*.classpath
 **/*.settings
 
-.env
+dev.env

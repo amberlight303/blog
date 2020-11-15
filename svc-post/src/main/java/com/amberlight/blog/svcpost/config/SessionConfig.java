@@ -9,17 +9,4 @@ import org.springframework.session.web.context.AbstractHttpSessionApplicationIni
 @EnableRedisHttpSession(redisFlushMode = RedisFlushMode.IMMEDIATE)
 public class SessionConfig extends AbstractHttpSessionApplicationInitializer {
 
-//
-//    @Bean
-//    public RedisTemplate<Object, Object> sessionRedisTemplate(
-//            RedisConnectionFactory connectionFactory) {
-//        RedisTemplate<Object, Object> template = new RedisTemplate<Object, Object>();
-//        template.setKeySerializer(new StringRedisSerializer());
-//        template.setHashKeySerializer(new StringRedisSerializer());
-//        template.setDefaultSerializer(new GenericJackson2JsonRedisSerializer());
-//        template.setConnectionFactory(connectionFactory);
-//        return template;
-//    }
-
-
 }

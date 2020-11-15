@@ -20,9 +20,6 @@ public class Role implements Serializable {
     @Column(name = "name")
     private String name;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Collection<User> users;
-
     public Role() {
         super();
     }
@@ -64,6 +61,5 @@ public class Role implements Serializable {
         builder.append("Role [name=").append(name).append("]").append("[id=").append(id).append("]");
         return builder.toString();
     }
-
 
 }

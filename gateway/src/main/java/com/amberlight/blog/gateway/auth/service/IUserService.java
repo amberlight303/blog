@@ -50,11 +50,10 @@ public interface IUserService {
 
     User updateUser2FA(boolean use2FA);
 
-//    List<String> getUsersFromSessionRegistry();
-
     NewLocationToken isNewLoginLocation(String username, String ip);
 
     String isValidNewLocationToken(String token);
 
     void addUserLocation(User user, String ip);
+
 }

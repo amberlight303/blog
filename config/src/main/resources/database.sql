@@ -1,4 +1,3 @@
-
 --//////////////////////////////////////////////////// AUTH ////////////////////////////////////////////////////////////
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -60,7 +59,7 @@ create table users_roles (
 );
 ------------------------------------------------------------------------------------------------------------------------
 insert into users_accounts (id, first_name, last_name, email, password, enabled, is_using_2fa)
-values ( (select nextval('users_accounts_id_seq')), 'Nikola', 'Tesla', 'amberlight303@gmail.com',
+values ( (select nextval('users_accounts_id_seq')), 'Nikola', 'Tesla', 'someTestUser@gmail.com',
          '$2y$11$enDqQYULgbxAWzCrjZ.j7Owl9OAHNpkXZIZJHEyI51ZGB1BCWjQNi', true, false);
 ------------------------------------------------------------------------------------------------------------------------
 insert into roles (id, name)
@@ -68,7 +67,7 @@ values ( (select nextval('roles_id_seq')), 'ROLE_ADMIN');
 
 ------------------------------------------------------------------------------------------------------------------------
 insert into users_roles (user_id, role_id)
-values ( (select id from users_accounts where email = 'amberlight303@gmail.com'),
+values ( (select id from users_accounts where email = 'someTestUser@gmail.com'),
          (select id from roles where name = 'ROLE_ADMIN')
        );
 ------------------------------------------------------------------------------------------------------------------------

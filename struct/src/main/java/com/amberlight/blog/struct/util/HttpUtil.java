@@ -16,6 +16,4 @@ public class HttpUtil {
      */
     public final static Integer HTTP_STATUS_BUSINESS_LOGIC_ERROR = 450;
 
-
-
 }

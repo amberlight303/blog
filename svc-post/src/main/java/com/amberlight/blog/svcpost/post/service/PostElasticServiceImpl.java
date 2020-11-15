@@ -64,7 +64,8 @@ public class PostElasticServiceImpl implements PostElasticService {
             posts.add(hit.getContent());
         });
         logger.log(LogLevel.BUSINESS,
-                new CustomMessage(4, String.format("Searched posts by '%s'. Results found: %d", keyword, posts.size())));
+                new CustomMessage(4, String.format("Searched posts by '%s'. Results found: %d",
+                        keyword, posts.size())));
         return posts;
     }
 

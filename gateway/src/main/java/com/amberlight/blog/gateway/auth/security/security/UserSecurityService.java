@@ -33,4 +33,5 @@ public class UserSecurityService implements ISecurityUserService {
         final Calendar cal = Calendar.getInstance();
         return passToken.getExpiryDate().before(cal.getTime());
     }
+
 }

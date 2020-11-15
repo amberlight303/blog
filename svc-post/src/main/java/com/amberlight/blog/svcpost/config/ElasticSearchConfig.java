@@ -26,7 +26,7 @@ public class ElasticSearchConfig {
     private Integer timeout;
 
     @Bean(destroyMethod = "close")
-    RestHighLevelClient elasticsearchClient() {
+    public RestHighLevelClient elasticsearchClient() {
         return new RestHighLevelClient(RestClient.builder(new HttpHost(host, port, schema))
                 .setRequestConfigCallback(
                         requestConfigBuilder -> requestConfigBuilder
@@ -36,7 +36,8 @@ public class ElasticSearchConfig {
     }
 
     @Bean
-    ElasticsearchRestTemplate elasticsearchTemplate() {
+    public ElasticsearchRestTemplate elasticsearchTemplate() {
         return new ElasticsearchRestTemplate(elasticsearchClient());
     }
+
 }

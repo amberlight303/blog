@@ -42,7 +42,8 @@ public class RegistrationController {
     }
 
     @GetMapping("/registrationConfirm")
-    public String confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
+    public String confirmRegistration(final HttpServletRequest request, final Model model,
+                                      @RequestParam("token") final String token) throws UnsupportedEncodingException {
         Locale locale = request.getLocale();
         final String result = userService.validateVerificationToken(token);
         if (result.equals("valid")) {
@@ -85,8 +86,6 @@ public class RegistrationController {
         }
         return "redirect:/login?lang=" + locale.getLanguage();
     }
-
-    // ============== NON-API ============
 
     public void authWithoutPassword(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()

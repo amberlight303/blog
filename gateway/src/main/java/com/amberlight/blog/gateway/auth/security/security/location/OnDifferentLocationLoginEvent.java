@@ -15,9 +15,8 @@ public class OnDifferentLocationLoginEvent extends ApplicationEvent {
     private final NewLocationToken token;
     private final String appUrl;
 
-    //
-
-    public OnDifferentLocationLoginEvent(Locale locale, String username, String ip, NewLocationToken token, String appUrl) {
+    public OnDifferentLocationLoginEvent(Locale locale, String username, String ip,
+                                         NewLocationToken token, String appUrl) {
         super(token);
         this.locale = locale;
         this.username = username;
@@ -26,7 +25,6 @@ public class OnDifferentLocationLoginEvent extends ApplicationEvent {
         this.appUrl = appUrl;
     }
 
-    //
     public Locale getLocale() {
         return locale;
     }

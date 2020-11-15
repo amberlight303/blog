@@ -56,49 +56,19 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-
-        <spring.boot.version>2.3.2.RELEASE</spring.boot.version>
-        <spring.boot.starter.security.version>2.3.3.RELEASE</spring.boot.starter.security.version>
-        <spring.boot.starter.web.version>2.3.2.RELEASE</spring.boot.starter.web.version>
-        <spring.boot.devtools.version>2.3.2.RELEASE</spring.boot.devtools.version>
-        <spring.boot.configuration-processor.version>2.3.2.RELEASE</spring.boot.configuration-processor.version>
-        <spring.boot.tomcat.version>2.3.2.RELEASE</spring.boot.tomcat.version>
-        <spring.boot.test.version>2.3.2.RELEASE</spring.boot.test.version>
-        <spring.boot.maven.plugin.version>2.3.2.RELEASE</spring.boot.maven.plugin.version>
-        <spring.boot.starter.data.redis.version>2.3.2.RELEASE</spring.boot.starter.data.redis.version>
-        <spring.boot.starter.data.jpa.version>2.3.3.RELEASE</spring.boot.starter.data.jpa.version>
-        <spring.boot.starter.mail.version>2.3.3.RELEASE</spring.boot.starter.mail.version>
-        <spring.session.version>1.3.5.RELEASE</spring.session.version>
-        <spring.session.bom.version>Corn-SR2</spring.session.bom.version>
-        <spring.session.data.redis.version>2.3.0.RELEASE</spring.session.data.redis.version>
-        <spring.security.test.version>5.3.4.RELEASE</spring.security.test.version>
         <spring.cloud.starter.eureka-server.version>1.4.7.RELEASE</spring.cloud.starter.eureka-server.version>
-        <spring.cloud.starter.eureka.version>1.4.7.RELEASE</spring.cloud.starter.eureka.version>
         <spring.cloud.starter.zuul.version>1.4.7.RELEASE</spring.cloud.starter.zuul.version>
-        <spring.cloud.starter.zipkin.version>2.2.4.RELEASE</spring.cloud.starter.zipkin.version>
         <spring.cloud.starter.feign.version>1.4.7.RELEASE</spring.cloud.starter.feign.version>
-        <spring.cloud.config-server.version>2.2.4.RELEASE</spring.cloud.config-server.version>
-        <spring.cloud.starter.config.version>2.2.4.RELEASE</spring.cloud.starter.config.version>
         <lombok.version>1.18.12</lombok.version>
         <postgresql.version>42.2.15</postgresql.version>
-<!--        <logstash-logback-encoder.version>4.8</logstash-logback-encoder.version>-->
         <guava.version>29.0-jre</guava.version>
         <geoip2.version>2.14.0</geoip2.version>
         <uap-java.version>1.4.0</uap-java.version>
         <passay.version>1.0</passay.version>
-        <javax.validation.version>2.0.1.Final</javax.validation.version>
         <jboss.aerogear.otp.version>1.0.0</jboss.aerogear.otp.version>
         <javax.el-api>3.0.0</javax.el-api>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
-        <spring.boot.starter.thymeleaf.version>2.3.3.RELEASE</spring.boot.starter.thymeleaf.version>
-        <thymeleaf.springsecurity5.version>3.0.4.RELEASE</thymeleaf.springsecurity5.version>
-        <thymeleaf.layout.dialect.version>2.4.1</thymeleaf.layout.dialect.version>
-        <zipkin.java.server.version>2.12.9</zipkin.java.server.version>
-        <zipkin.java.autoconfigure-ui.version>2.12.9</zipkin.java.autoconfigure-ui.version>
-        <rest-assured.version>4.3.1</rest-assured.version>
-        <junit.version>4.13</junit.version>
     </properties>
 
 </project>

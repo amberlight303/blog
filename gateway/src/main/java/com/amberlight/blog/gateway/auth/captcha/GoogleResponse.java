@@ -127,6 +127,8 @@ public class GoogleResponse {
 
     @Override
     public String toString() {
-        return "GoogleResponse{" + "success=" + success + ", challengeTs='" + challengeTs + '\'' + ", hostname='" + hostname + '\''+ ", score='" + score + '\''+ ", action='" + action+ '\'' + ", errorCodes=" + Arrays.toString(errorCodes) + '}';
+        return "GoogleResponse{" + "success=" + success + ", challengeTs='" + challengeTs + '\'' + ", hostname='"
+                + hostname + '\''+ ", score='" + score + '\''+ ", action='" + action+ '\'' + ", errorCodes="
+                + Arrays.toString(errorCodes) + '}';
     }
 }

@@ -8,6 +8,9 @@ services:
       BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: $BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
     image: amberlight303/blog-config:latest
     restart: always
+    network_mode: host
+    ports:
+      - "9081:9081"
     logging:
       options:
         max-size: "10m"
@@ -24,9 +27,7 @@ services:
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
     image: amberlight303/blog-discovery:latest
     restart: always
-#    depends_on:
-#      config:
-#        condition: service_healthy
+    network_mode: host
     ports:
       - "9082:9082"
     logging:
@@ -62,11 +63,10 @@ services:
       BLOG_GOOGLE_RECAPTCHA_KEY_SITE: $BLOG_GOOGLE_RECAPTCHA_KEY_SITE
       BLOG_GOOGLE_RECAPTCHA_KEY_SECRET: $BLOG_GOOGLE_RECAPTCHA_KEY_SECRET
       BLOG_REMEMBER_ME_SERVICE_KEY: $BLOG_REMEMBER_ME_SERVICE_KEY
+      BLOG_GEO_IP_LIB_ENABLED: $BLOG_GEO_IP_LIB_ENABLED
     image: amberlight303/blog-gateway:latest
     restart: always
-#    depends_on:
-#      config:
-#        condition: service_healthy
+    network_mode: host
     ports:
       - "9080:9080"
     logging:
@@ -101,9 +101,9 @@ services:
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
     image: amberlight303/blog-svc-post:latest
     restart: always
-#    depends_on:
-#      config:
-#        condition: service_healthy
+    network_mode: host
+    ports:
+      - "9083:9083"
     logging:
       options:
         max-size: "10m"

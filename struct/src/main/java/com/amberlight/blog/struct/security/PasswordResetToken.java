@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "passwords_reset_tokens")
 @Data
-public class PasswordResetToken implements Serializable{
+public class PasswordResetToken implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

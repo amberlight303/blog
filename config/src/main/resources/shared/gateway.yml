@@ -13,11 +13,6 @@ security:
 session:
   maxInactiveIntervalInSeconds: 86400
 
-#logging:
-##  config: classpath:/gateway-log4j2.xml
-#  config: ${BLOG_SPRING_CLOUD_CONFIG_URI}/gateway/log4j2/shared
-
-
 kafka:
   bootstrapAddress: ${BLOG_KAFKA_BOOTSTRAP_ADDRESS}
   topic:
@@ -71,10 +66,6 @@ zuul:
     post-service:
       path: /post-service/**
       sensitive-headers:
-#    discovery:
-#      path: /discovery/**
-#      url: http://discovery:9082
-#      sensitive-headers:
 
 hystrix:
   command:
@@ -92,7 +83,7 @@ hystrix:
 geo:
   ip:
     lib:
-      enabled: false
+      enabled: ${BLOG_GEO_IP_LIB_ENABLED}
 
 # 5 AM every day
 purge:

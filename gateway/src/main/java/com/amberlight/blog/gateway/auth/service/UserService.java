@@ -183,7 +183,8 @@ public class UserService implements IUserService {
 
     @Override
     public String generateQRUrl(User user) throws UnsupportedEncodingException {
-        return QR_PREFIX + URLEncoder.encode(String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s", APP_NAME, user.getEmail(), user.getSecret(), APP_NAME), "UTF-8");
+        return QR_PREFIX + URLEncoder.encode(String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s",
+                APP_NAME, user.getEmail(), user.getSecret(), APP_NAME), "UTF-8");
     }
 
     @Override
@@ -193,7 +194,8 @@ public class UserService implements IUserService {
         User currentUser = (User) curAuth.getPrincipal();
         currentUser.setUsing2FA(use2FA);
         currentUser = userRepository.save(currentUser);
-        final Authentication auth = new UsernamePasswordAuthenticationToken(currentUser, currentUser.getPassword(), curAuth.getAuthorities());
+        final Authentication auth = new UsernamePasswordAuthenticationToken(currentUser, currentUser.getPassword(),
+                curAuth.getAuthorities());
         SecurityContextHolder.getContext()
             .setAuthentication(auth);
         return currentUser;

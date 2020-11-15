@@ -55,8 +55,6 @@ public class MyUserDetailsService implements UserDetailsService {
         }
     }
 
-    // UTIL
-
     private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
         final List<GrantedAuthority> authorities = new ArrayList<>();
         for (final Role role : roles) {

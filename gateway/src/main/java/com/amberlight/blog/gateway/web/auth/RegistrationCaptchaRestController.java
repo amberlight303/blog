@@ -58,9 +58,9 @@ public class RegistrationCaptchaRestController {
     private void registerNewUserHandler(final UserDto accountDto, final HttpServletRequest request) {
         logger.debug("Registering user account with information: {}", accountDto);
         final User registered = userService.registerNewUserAccount(accountDto);
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(),
+                                                                    getAppUrl(request)));
     }
-    
 
     private String getAppUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

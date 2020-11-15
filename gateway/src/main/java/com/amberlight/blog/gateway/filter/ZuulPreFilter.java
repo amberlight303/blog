@@ -15,8 +15,6 @@ import java.util.Base64;
 @Component
 public class ZuulPreFilter extends ZuulFilter {
 
-//        private Logger log = LoggerFactory.getLogger(this.getClass());
-
         @Autowired
         private SessionRepository repository;
 
@@ -39,7 +37,6 @@ public class ZuulPreFilter extends ZuulFilter {
         @Override
         public Object run() {
                 RequestContext context = RequestContext.getCurrentContext();
-
                 HttpSession httpSession = context.getRequest().getSession();
                 httpSession.setAttribute(
                         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
@@ -47,18 +44,7 @@ public class ZuulPreFilter extends ZuulFilter {
                 );
                 repository.findById(httpSession.getId());
                 context.addZuulRequestHeader("cookie", "SESSION=" + base64Encode(httpSession.getId()));
-//                log.info("ZuulPreFilter session proxy: {} and {}", session.getId(), httpSession.getId());
-
-                // Rely on HttpServletRequest to retrieve the correct remote address from upstream X-Forwarded-For header
-//                HttpServletRequest request = context.getRequest();
-//                String remoteAddr = request.getRemoteAddr();
-
-                // Pass remote address downstream by setting X-Forwarded for header again on Zuul request
-//                log.debug("Settings X-Forwarded-For to: {}", remoteAddr);
                 context.getZuulRequestHeaders().put("X-Forwarded-For", context.getRequest().getRemoteAddr());
-
-
-
                 return null;
         }
 
@@ -66,6 +52,5 @@ public class ZuulPreFilter extends ZuulFilter {
                 byte[] encodedCookieBytes = Base64.getEncoder().encode(value.getBytes());
                 return new String(encodedCookieBytes);
         }
-
 
 }

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.util.ResourceUtils;
 import ua_parser.Parser;
 
 import java.io.File;
@@ -26,9 +25,10 @@ public class LoginNotificationConfig {
 
     @Bean(name="GeoIPCity")
     public DatabaseReader databaseReader() throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:maxmind/GeoLite2-City.mmdb");
+        Resource resource = resourceLoader.getResource("classpath:maxmind" + File.separator + "GeoLite2-City.mmdb");
         InputStream inputStream = resource.getInputStream();
         return new DatabaseReader.Builder(inputStream)
                 .build();
     }
+
 }
