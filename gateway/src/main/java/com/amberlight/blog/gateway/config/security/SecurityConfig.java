@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -39,6 +41,9 @@ import java.io.InputStream;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Value("${security.rememberme.key}")
     private String rememberMeKey;
@@ -118,9 +123,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name="GeoIPCountry")
     public DatabaseReader databaseReader() throws IOException, GeoIp2Exception {
-//        File database = ResourceUtils
-//                .getFile("classpath:maxmind/GeoLite2-Country.mmdb");
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/maxmind/GeoLite2-Country.mmdb");
+        Resource resource = resourceLoader.getResource("classpath:maxmind/GeoLite2-Country.mmdb");
+        InputStream inputStream = resource.getInputStream();
         return new DatabaseReader.Builder(inputStream)
                 .build();
     }

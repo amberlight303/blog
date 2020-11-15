@@ -1,8 +1,11 @@
 package com.amberlight.blog.gateway.config;
 
 import com.maxmind.geoip2.DatabaseReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ResourceUtils;
 import ua_parser.Parser;
 
@@ -13,6 +16,9 @@ import java.io.InputStream;
 @Configuration
 public class LoginNotificationConfig {
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     @Bean
     public Parser uaParser() throws IOException {
         return new Parser();
@@ -20,9 +26,8 @@ public class LoginNotificationConfig {
 
     @Bean(name="GeoIPCity")
     public DatabaseReader databaseReader() throws IOException {
-//        File database = ResourceUtils
-//                .getFile("classpath:maxmind/GeoLite2-City.mmdb");
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("/maxmind/GeoLite2-City.mmdb");
+        Resource resource = resourceLoader.getResource("classpath:maxmind/GeoLite2-City.mmdb");
+        InputStream inputStream = resource.getInputStream();
         return new DatabaseReader.Builder(inputStream)
                 .build();
     }
