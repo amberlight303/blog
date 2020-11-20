@@ -18,6 +18,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +31,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 public class RegistrationRestController {
@@ -125,6 +131,31 @@ public class RegistrationRestController {
         return null;
     }
 
+    // Confirm registration
+    @GetMapping("/user/registrationConfirm")
+    public void confirmRegistration(@RequestParam("token") final String token) {
+        final String result = userService.validateVerificationToken(token);
+        if (!result.equals("valid")) throw new BusinessLogicException("Invalid token");
+        final User user = userService.getUser(token);
+        authWithoutPassword(user);
+    }
+
+    // Enable new location
+    @GetMapping("/user/enableNewLoc")
+    public void enableNewLoc(@RequestParam("token") String token) {
+        final String loc = userService.isValidNewLocationToken(token);
+        if (loc == null) throw new BusinessLogicException("Invalid token");
+
+    }
+
+    public void authWithoutPassword(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(p -> new SimpleGrantedAuthority(p.getName()))
+                .collect(Collectors.toList());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
     private SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale,
                                                                     final VerificationToken newToken, final User user) {
         final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
@@ -159,4 +190,5 @@ public class RegistrationRestController {
         }
         return xfHeader.split(",")[0];
     }
+
 }
