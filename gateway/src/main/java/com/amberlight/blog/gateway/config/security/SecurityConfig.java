@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationDetailsSource(authenticationDetailsSource)
             .and()
             .authorizeRequests()
+            .antMatchers("/user/**").permitAll()
             .antMatchers("/eureka/**").hasRole("SYSTEM")
             .anyRequest().authenticated()
             .and()

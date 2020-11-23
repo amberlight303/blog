@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/posts/")
 @Controller
 public class PostController {
 
@@ -40,7 +40,7 @@ public class PostController {
     @Autowired
     private PostElasticService postElasticService;
 
-    @GetMapping("/test")
+    @GetMapping("test")
     public String test() {
 
         logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
@@ -55,7 +55,7 @@ public class PostController {
         return postService.findAllPosts();
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("{postId}")
     public Post findPost(@PathVariable String postId) {
         return postService.findPostById(postId);
     }
@@ -68,25 +68,25 @@ public class PostController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("{postId}")
     public void deletePost(@PathVariable String postId) throws JsonProcessingException {
         postService.deletePost(postId, authFacade.getUser().getId());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
-    @PutMapping("/{postId}")
+    @PutMapping("{postId}")
     public Post updatePost(@RequestBody @Valid PostDto post,
                            @PathVariable String postId) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
         return postService.updatePost(post, postId);
     }
 
-    @GetMapping("/search")
+    @GetMapping("search")
     public List<Post> searchByTitleOrContentAllIgnoreCase(@RequestParam("s") String keyword) {
         return postElasticService.findByTitleOrContentAllIgnoreCase(keyword);
     }
 
-    @GetMapping("/search/{userId}")
+    @GetMapping("search/{userId}")
     public List<Post> searchAllByUserId(@PathVariable Long userId) {
         return postElasticService.findAllByUserId(userId);
     }

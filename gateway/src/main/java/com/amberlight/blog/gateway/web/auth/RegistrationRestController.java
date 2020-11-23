@@ -18,15 +18,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -38,6 +37,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/user/")
 public class RegistrationRestController {
 
     private static final Logger logger = LogManager.getLogger(RegistrationRestController.class);
@@ -64,8 +64,7 @@ public class RegistrationRestController {
         super();
     }
 
-    // Registration
-    @PostMapping("/user/registration")
+    @PostMapping("registration")
     public void registerUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         logger.debug("Registering user account with information: {}", accountDto);
         final User registered = userService.registerNewUserAccount(accountDto);
@@ -74,8 +73,7 @@ public class RegistrationRestController {
                                                                     getAppUrl(request)));
     }
 
-    // User activation - verification
-    @GetMapping("/user/resendRegistrationToken")
+    @GetMapping("resendRegistrationToken")
     public void resendRegistrationToken(final HttpServletRequest request,
                                         @RequestParam("token") final String existingToken) {
         final VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
@@ -83,21 +81,18 @@ public class RegistrationRestController {
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
     }
 
-    // Reset password
-    @PostMapping("/user/resetPassword")
+    @PostMapping("resetPassword")
     public void resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) {
         final User user = userService.findUserByEmail(userEmail);
-        if (user != null) {
-            final String token = UUID.randomUUID().toString();
-            userService.createPasswordResetTokenForUser(user, token);
-            mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
-        }
+        if (user == null) throw new BusinessLogicException("User doesn't exist.");
+        final String token = UUID.randomUUID().toString();
+        userService.createPasswordResetTokenForUser(user, token);
+        mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
+
     }
 
-    // Save password
-    @PostMapping("/user/savePassword")
+    @PostMapping("savePassword")
     public void savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
-
         final String result = securityUserService.validatePasswordResetToken(passwordDto.getToken());
         if(result != null) {
             throw new BusinessLogicException(messages.getMessage("auth.message." + result, null, locale));
@@ -110,9 +105,8 @@ public class RegistrationRestController {
         }
     }
 
-    // Change user password
-    @PostMapping("/user/updatePassword")
-    public void changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
+    @PostMapping("updatePassword")
+    public void changeUserPassword(@Valid PasswordDto passwordDto) {
         final User user = userService.findUserByEmail(((User) SecurityContextHolder.getContext()
                                                               .getAuthentication().getPrincipal()).getEmail());
         if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
@@ -121,8 +115,8 @@ public class RegistrationRestController {
         userService.changeUserPassword(user, passwordDto.getNewPassword());
     }
 
-    // Change user 2 factor authentication
-    @PostMapping("/user/update/2fa")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PostMapping("update/2fa")
     public String modifyUser2FA(@RequestParam("use2FA") final boolean use2FA) throws UnsupportedEncodingException {
         final User user = userService.updateUser2FA(use2FA);
         if (use2FA) {
@@ -131,8 +125,7 @@ public class RegistrationRestController {
         return null;
     }
 
-    // Confirm registration
-    @GetMapping("/user/registrationConfirm")
+    @GetMapping("registrationConfirm")
     public void confirmRegistration(@RequestParam("token") final String token) {
         final String result = userService.validateVerificationToken(token);
         if (!result.equals("valid")) throw new BusinessLogicException("Invalid token");
@@ -140,15 +133,13 @@ public class RegistrationRestController {
         authWithoutPassword(user);
     }
 
-    // Enable new location
-    @GetMapping("/user/enableNewLoc")
+    @GetMapping("enableNewLoc")
     public void enableNewLoc(@RequestParam("token") String token) {
         final String loc = userService.isValidNewLocationToken(token);
         if (loc == null) throw new BusinessLogicException("Invalid token");
-
     }
 
-    public void authWithoutPassword(User user) {
+    private void authWithoutPassword(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(p -> new SimpleGrantedAuthority(p.getName()))
                 .collect(Collectors.toList());
@@ -158,7 +149,7 @@ public class RegistrationRestController {
 
     private SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale,
                                                                     final VerificationToken newToken, final User user) {
-        final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
+        final String confirmationUrl = contextPath + "/user/registrationConfirm?token=" + newToken.getToken();
         final String message = messages.getMessage("message.resendToken", null, locale);
         return constructEmail("Resend Registration Token", message + " \r\n" + confirmationUrl, user);
     }
