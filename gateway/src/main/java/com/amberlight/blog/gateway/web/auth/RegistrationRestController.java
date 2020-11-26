@@ -37,7 +37,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user/")
 public class RegistrationRestController {
 
     private static final Logger logger = LogManager.getLogger(RegistrationRestController.class);
@@ -64,7 +63,7 @@ public class RegistrationRestController {
         super();
     }
 
-    @PostMapping("registration")
+    @PostMapping("/user/registration")
     public void registerUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         logger.debug("Registering user account with information: {}", accountDto);
         final User registered = userService.registerNewUserAccount(accountDto);
@@ -73,7 +72,7 @@ public class RegistrationRestController {
                                                                     getAppUrl(request)));
     }
 
-    @GetMapping("resendRegistrationToken")
+    @GetMapping("/user/resendRegistrationToken")
     public void resendRegistrationToken(final HttpServletRequest request,
                                         @RequestParam("token") final String existingToken) {
         final VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
@@ -81,7 +80,7 @@ public class RegistrationRestController {
         mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
     }
 
-    @PostMapping("resetPassword")
+    @PostMapping("/user/resetPassword")
     public void resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) {
         final User user = userService.findUserByEmail(userEmail);
         if (user == null) throw new BusinessLogicException("User doesn't exist.");
@@ -91,7 +90,7 @@ public class RegistrationRestController {
 
     }
 
-    @PostMapping("savePassword")
+    @PostMapping("/user/savePassword")
     public void savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
         final String result = securityUserService.validatePasswordResetToken(passwordDto.getToken());
         if(result != null) {
@@ -105,7 +104,7 @@ public class RegistrationRestController {
         }
     }
 
-    @PostMapping("updatePassword")
+    @PostMapping("/user/updatePassword")
     public void changeUserPassword(@Valid PasswordDto passwordDto) {
         final User user = userService.findUserByEmail(((User) SecurityContextHolder.getContext()
                                                               .getAuthentication().getPrincipal()).getEmail());
@@ -116,7 +115,7 @@ public class RegistrationRestController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @PostMapping("update/2fa")
+    @PostMapping("/user/update/2fa")
     public String modifyUser2FA(@RequestParam("use2FA") final boolean use2FA) throws UnsupportedEncodingException {
         final User user = userService.updateUser2FA(use2FA);
         if (use2FA) {
@@ -125,7 +124,7 @@ public class RegistrationRestController {
         return null;
     }
 
-    @GetMapping("registrationConfirm")
+    @GetMapping("/user/registrationConfirm")
     public void confirmRegistration(@RequestParam("token") final String token) {
         final String result = userService.validateVerificationToken(token);
         if (!result.equals("valid")) throw new BusinessLogicException("Invalid token");
@@ -133,7 +132,7 @@ public class RegistrationRestController {
         authWithoutPassword(user);
     }
 
-    @GetMapping("enableNewLoc")
+    @GetMapping("/user/enableNewLoc")
     public void enableNewLoc(@RequestParam("token") String token) {
         final String loc = userService.isValidNewLocationToken(token);
         if (loc == null) throw new BusinessLogicException("Invalid token");

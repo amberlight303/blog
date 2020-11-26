@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/posts/")
-@Controller
 public class PostController {
 
     private static final Logger logger = LogManager.getLogger(PostController.class);
@@ -40,7 +38,7 @@ public class PostController {
     @Autowired
     private PostElasticService postElasticService;
 
-    @GetMapping("test")
+    @GetMapping("/posts/test")
     public String test() {
 
         logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
@@ -50,43 +48,43 @@ public class PostController {
         throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public List<Post> findAllPosts() {
         return postService.findAllPosts();
     }
 
-    @GetMapping("{postId}")
+    @GetMapping("/posts/{postId}")
     public Post findPost(@PathVariable String postId) {
         return postService.findPostById(postId);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
-    @PostMapping
+    @PostMapping("/posts")
     public Post createPost(@RequestBody @Valid PostDto post) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
         return postService.createPost(post);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
-    @DeleteMapping("{postId}")
+    @DeleteMapping("/posts/{postId}")
     public void deletePost(@PathVariable String postId) throws JsonProcessingException {
         postService.deletePost(postId, authFacade.getUser().getId());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
-    @PutMapping("{postId}")
+    @PutMapping("/posts/{postId}")
     public Post updatePost(@RequestBody @Valid PostDto post,
                            @PathVariable String postId) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
         return postService.updatePost(post, postId);
     }
 
-    @GetMapping("search")
+    @GetMapping("/posts/search")
     public List<Post> searchByTitleOrContentAllIgnoreCase(@RequestParam("s") String keyword) {
         return postElasticService.findByTitleOrContentAllIgnoreCase(keyword);
     }
 
-    @GetMapping("search/{userId}")
+    @GetMapping("/posts/search/{userId}")
     public List<Post> searchAllByUserId(@PathVariable Long userId) {
         return postElasticService.findAllByUserId(userId);
     }
