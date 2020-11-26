@@ -45,7 +45,7 @@ all auth features are placed in the gateway service.
 ### Posts
 
 Posts are stored in MongoDB. Full-text search is implemented using Elasticsearch, operations related to changing posts 
-asynchronously reflect in Elasticsearch via Kafka. Ordinary posts retrieve operations are done using MongoDB.
+asynchronously reflect in Elasticsearch via Kafka. Ordinary posts retrieval operations are done using MongoDB.
 Administrators can CRUD posts, users can only retrieve posts. Validation is made using annotations. The persistence 
 layer is done using Spring Data `JpaRepository` (for PostgreSQL) and `CrudRepository` (for MongoDB) that provide a 
 domain specific languages for making requests to data bases.
