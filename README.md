@@ -171,3 +171,7 @@ username `someTestUser@gmail.com` and password `password`.
 <p align="center">
     <img src="https://user-images.githubusercontent.com/26651009/100383297-f4910500-3025-11eb-939f-65b6e14f889f.png"/>
 </p>
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/26651009/100386400-e5ae5080-302d-11eb-8e9a-ee03430ddc8f.png"/>
+</p>
