@@ -7,7 +7,7 @@
     <Appenders>
         <Kafka name="Kafka" topic="gateway-log">
             <CustomJsonLayout/>
-            <Property name="bootstrap.servers">127.0.0.1:9092</Property>
+            <Property name="bootstrap.servers">${env:BLOG_KAFKA_BOOTSTRAP_ADDRESS}</Property>
             <ThresholdFilter level="ERROR"/>
         </Kafka>
         <Async name="Async">
