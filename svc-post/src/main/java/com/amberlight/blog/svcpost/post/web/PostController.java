@@ -15,8 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,54 +39,52 @@ public class PostController {
     private PostElasticService postElasticService;
 
     @GetMapping("/posts/test")
-    public String test() {
-
+    public ResponseEntity<String> test() {
         logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
-
-//        return "hello boi, this is test!";
-
+//        return "hello boi, this is a test!";
         throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
 
     @GetMapping("/posts")
-    public List<Post> findAllPosts() {
-        return postService.findAllPosts();
+    public ResponseEntity<List<Post>> findAllPosts() {
+        return ResponseEntity.ok(postService.findAllPosts());
     }
 
     @GetMapping("/posts/{postId}")
-    public Post findPost(@PathVariable String postId) {
-        return postService.findPostById(postId);
+    public ResponseEntity<Post> findPost(@PathVariable String postId) {
+        return ResponseEntity.ok(postService.findPostById(postId));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PostMapping("/posts")
-    public Post createPost(@RequestBody @Valid PostDto post) throws JsonProcessingException {
+    public ResponseEntity<Post> createPost(@RequestBody @Valid PostDto post) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
-        return postService.createPost(post);
+        return ResponseEntity.ok(postService.createPost(post));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @DeleteMapping("/posts/{postId}")
-    public void deletePost(@PathVariable String postId) throws JsonProcessingException {
+    public ResponseEntity<Void> deletePost(@PathVariable String postId) throws JsonProcessingException {
         postService.deletePost(postId, authFacade.getUser().getId());
+        return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SYSTEM')")
     @PutMapping("/posts/{postId}")
-    public Post updatePost(@RequestBody @Valid PostDto post,
+    public ResponseEntity<Post> updatePost(@RequestBody @Valid PostDto post,
                            @PathVariable String postId) throws JsonProcessingException {
         post.setUserId(authFacade.getUser().getId());
-        return postService.updatePost(post, postId);
+        return ResponseEntity.ok(postService.updatePost(post, postId));
     }
 
     @GetMapping("/posts/search")
-    public List<Post> searchByTitleOrContentAllIgnoreCase(@RequestParam("s") String keyword) {
-        return postElasticService.findByTitleOrContentAllIgnoreCase(keyword);
+    public ResponseEntity<List<Post>> searchByTitleOrContentAllIgnoreCase(@RequestParam("s") String keyword) {
+        return ResponseEntity.ok(postElasticService.findByTitleOrContentAllIgnoreCase(keyword));
     }
 
     @GetMapping("/posts/search/{userId}")
-    public List<Post> searchAllByUserId(@PathVariable Long userId) {
-        return postElasticService.findAllByUserId(userId);
+    public ResponseEntity<List<Post>> searchAllByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(postElasticService.findAllByUserId(userId));
     }
 
 }

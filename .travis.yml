@@ -41,3 +41,44 @@ after_success:
   - docker build -t $SVC_POST:$COMMIT ./svc-post
   - docker tag $SVC_POST:$COMMIT $SVC_POST:$TAG
   - docker push $SVC_POST
+
+  # MONGO DB
+  - export MONGO_DB=amberlight303/blog-mongodb
+  - docker build -t $MONGO_DB:$COMMIT ./mongodb
+  - docker tag $MONGO_DB:$COMMIT $MONGO_DB:$TAG
+  - docker push $MONGO_DB
+
+  # REDIS
+  - export REDIS=amberlight303/blog-redis
+  - docker build -t $REDIS:$COMMIT ./redis
+  - docker tag $REDIS:$COMMIT $REDIS:$TAG
+  - docker push $REDIS
+
+  # ELASTICSEARCH
+  - export ELASTICSEARCH=amberlight303/blog-elasticsearch
+  - docker build -t $ELASTICSEARCH:$COMMIT ./elasticsearch
+  - docker tag $ELASTICSEARCH:$COMMIT $ELASTICSEARCH:$TAG
+  - docker push $ELASTICSEARCH
+
+  # LOGSTASH
+  - export LOGSTASH=amberlight303/blog-logstash
+  - docker build -t $LOGSTASH:$COMMIT ./logstash
+  - docker tag $LOGSTASH:$COMMIT $LOGSTASH:$TAG
+  - docker push $LOGSTASH
+
+  # KIBANA
+  - export KIBANA=amberlight303/blog-kibana
+  - docker build -t $KIBANA:$COMMIT ./kibana
+  - docker tag $KIBANA:$COMMIT $KIBANA:$TAG
+  - docker push $KIBANA
+
+  # POSTGRESQL
+  - export POSTGRESQL=amberlight303/blog-postgresql
+  - docker build -t $POSTGRESQL:$COMMIT ./postgresql
+  - docker tag $POSTGRESQL:$COMMIT $POSTGRESQL:$TAG
+  - docker push $POSTGRESQL
+
+
+
+
+
