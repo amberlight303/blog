@@ -31,19 +31,54 @@ services:
 
   blog-elasticsearch:
     image: amberlight303/blog-elasticsearch:latest
+    container_name: blog-elasticsearch
     restart: always
     network_mode: host
     environment:
       - discovery.type=single-node
-#      - cluster.name=elasticsearch
+      - cluster.name=blog-elasticsearch
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "http.host=0.0.0.0"
+      - "transport.host=127.0.0.1"
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
     ports:
       - "9200:9200"
     logging:
       options:
         max-size: "10m"
         max-file: "10"
+#    networks:
+#      - elk
+
+  blog-kibana:
+    image: amberlight303/blog-kibana:latest
+    restart: always
+    network_mode: host
+#    environment:
+#      - ELASTICSEARCH_URL=http://127.0.0.1:9200
+#      - ELASTICSEARCH_HOST=127.0.0.1
+#      - ELASTICSEARCH_PORT=9200
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5601:5601"
+    depends_on:
+      - blog-elasticsearch
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+#    networks:
+#      - elk
+
 
   blog-logstash:
     image: amberlight303/blog-logstash:latest
@@ -51,24 +86,13 @@ services:
     network_mode: host
     environment:
       - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
+    volumes:
+      - type: bind
+        source: ./logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
     ports:
       - "9600:9600"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  blog-kibana:
-    image: amberlight303/blog-kibana:latest
-    restart: always
-    network_mode: host
-    environment:
-      - elasticsearch.url=http://127.0.0.1:9200
-      - elasticsearch.hosts=http://127.0.0.1:9200
-    ports:
-      - "5601:5601"
-    depends_on:
-      - blog-elasticsearch
     logging:
       options:
         max-size: "10m"
@@ -227,3 +251,7 @@ services:
         max-size: "10m"
         max-file: "10"
 
+
+#networks:
+#  elk:
+#    driver: bridge

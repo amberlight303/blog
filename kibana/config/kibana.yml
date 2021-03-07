@@ -1,5 +1,5 @@
 server.name: post-kibana
 server.host: 0.0.0.0
-elasticsearch.url: http://127.0.0.1:9200
-elasticsearch.hosts: [ "http://127.0.0.1:9200" ]
+#elasticsearch.url: http://127.0.0.1:9200
+#elasticsearch.hosts: [ "http://127.0.0.1:9200" ]
 monitoring.ui.container.elasticsearch.enabled: true
