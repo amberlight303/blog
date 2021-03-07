@@ -24,35 +24,9 @@ public class TestController {
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @Secured("ROLE_ADMIN")
     @Secured("ROLE_ADMIN")
     @RequestMapping("/hello-to-admin")
     public String helloAdmin(Principal principal, @RequestHeader Map<String, String> headers) throws JsonProcessingException {
-
-
-
-//        RequestContext context = RequestContext.getCurrentContext();
-//        HttpSession httpSession = context.getRequest().getSession();
-
-
-//        System.out.println("88888888888888888888888888888888888 http session id is: " + httpSession.getId());
-
-//
-//
-//        System.out.println("################################### PRINCIPAL (PRINCIPAL) IS: \n" + objectMapper.writeValueAsString(principal));
-//
-//
-//        Object principalObject = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        System.out.println("*********************************** current session ID IS: "
-//                + RequestContextHolder.currentRequestAttributes().getSessionId());
-//
-//        System.out.println("=================================== PRINCIPAL (FROM SecurityContextHolder) IS: \n"
-//                + objectMapper.writeValueAsString(principalObject));
-//
-//        headers.forEach((key, value) -> {
-//            System.out.println(String.format("Header '%s' = %s", key, value));
-//        });
 
 
         logger.info("SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA_SUKA");

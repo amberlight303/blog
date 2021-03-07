@@ -59,8 +59,8 @@ services:
     image: amberlight303/blog-kibana:latest
     restart: always
     network_mode: host
-#    environment:
-#      - ELASTICSEARCH_URL=http://127.0.0.1:9200
+    environment:
+      - ELASTICSEARCH_URL=http://127.0.0.1:9200
 #      - ELASTICSEARCH_HOST=127.0.0.1
 #      - ELASTICSEARCH_PORT=9200
     volumes:
@@ -90,6 +90,10 @@ services:
       - type: bind
         source: ./logstash/config/logstash.yml
         target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
         read_only: true
     ports:
       - "9600:9600"
