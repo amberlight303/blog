@@ -4,13 +4,13 @@ if test -z "$BLOG_MONGODB_PASSWORD"; then
     exit 1
 fi
 
-auth="-u user -p $BLOG_MONGODB_PASSWORD"
+auth="-u $BLOG_MONGODB_USERNAME -p $BLOG_MONGODB_PASSWORD"
 
 # MONGODB USER CREATION
 (
 echo "setup mongodb auth"
-create_user="if (!db.getUser('user')) { db.createUser({ user: 'user', pwd: '$BLOG_MONGODB_PASSWORD', roles: [ {role:'readWrite', db:'blog'} ]}) }"
-until mongo blog --eval "$create_user" || mongo blog $auth --eval "$create_user"; do sleep 5; done
+create_user="if (!db.getUser('$BLOG_MONGODB_USERNAME')) { db.createUser({ user: '$BLOG_MONGODB_USERNAME', pwd: '$BLOG_MONGODB_PASSWORD', roles: [ {role:'readWrite', db:'$BLOG_MONGODB_DATABASE'} ]}) }"
+until mongo "$BLOG_MONGODB_DATABASE" --eval "$create_user" || mongo "$BLOG_MONGODB_DATABASE" "$auth" --eval "$create_user"; do sleep 5; done
 killall mongod
 sleep 1
 killall -9 mongod
@@ -20,7 +20,7 @@ killall -9 mongod
 (
 if test -n "$INIT_DUMP"; then
     echo "execute dump file"
-	until mongo blog $auth $INIT_DUMP; do sleep 5; done
+	until mongo blog "$auth" "$INIT_DUMP"; do sleep 5; done
 fi
 ) &
 

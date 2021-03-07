@@ -40,9 +40,16 @@ public class PostController {
 
     @GetMapping("/posts/test")
     public ResponseEntity<String> test() {
-        logger.log(LogLevel.DIAG, new CustomMessage(1, "MY DEAR MESSAGE!"));
-//        return "hello boi, this is a test!";
+        logger.log(LogLevel.DIAG, new CustomMessage(1, "DIAG MESSAGE BEFORE EXCEPTION"));
+//        return ResponseEntity.ok("hello boi, this is a test!");
         throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
+    }
+
+    @GetMapping("/posts/one-more-test")
+    public ResponseEntity<String> oneMoreTest() {
+        logger.log(LogLevel.DIAG, new CustomMessage(1, "IT IS A NEW DIAG MESSAGE!"));
+        return ResponseEntity.ok("one more test message");
+//        throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
 
     @GetMapping("/posts")

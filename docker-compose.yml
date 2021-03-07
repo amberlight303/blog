@@ -1,13 +1,124 @@
 version: '3.3'
 services:
 
-  config:
+  blog-mongodb:
+    environment:
+      BLOG_MONGODB_USERNAME: $BLOG_MONGODB_USERNAME
+      BLOG_MONGODB_PASSWORD: $BLOG_MONGODB_PASSWORD
+      BLOG_MONGODB_DATABASE: $BLOG_MONGODB_DATABASE
+    image: amberlight303/blog-mongodb:latest
+    restart: always
+    network_mode: host
+    ports:
+      - "27017:27017"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-redis:
+    environment:
+      BLOG_REDIS_PASSWORD: $BLOG_REDIS_PASSWORD
+    image: amberlight303/blog-redis:latest
+    restart: always
+    network_mode: host
+    ports:
+      - "6379:6379"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-elasticsearch:
+    image: amberlight303/blog-elasticsearch:latest
+    restart: always
+    network_mode: host
+    environment:
+      - discovery.type=single-node
+      - cluster.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-logstash:
+    image: amberlight303/blog-logstash:latest
+    restart: always
+    network_mode: host
+    ports:
+      - "9600:9600"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-kibana:
+    image: amberlight303/blog-kibana:latest
+    restart: always
+    network_mode: host
+    ports:
+      - "5601:5601"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-postgresql:
+    image: amberlight303/blog-postgresql:latest
+    environment:
+      POSTGRES_USER: $BLOG_POSTGRESQL_USERNAME
+      POSTGRES_PASSWORD: $BLOG_POSTGRESQL_PASSWORD
+      POSTGRES_DB: blog
+    restart: always
+    network_mode: host
+    ports:
+      - "5432:5432"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-zookeeper:
+    image: confluentinc/cp-zookeeper:6.0.2
+    container_name: zookeeper
+    restart: always
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+    ports:
+      - "2181:2181"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-kafka:
+    image: confluentinc/cp-kafka:6.0.2
+    restart: always
+    container_name: kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  blog-config:
     environment:
       BLOG_CONFIG_SERVICE_USERNAME: $BLOG_CONFIG_SERVICE_USERNAME
       BLOG_CONFIG_SERVICE_PASSWORD: $BLOG_CONFIG_SERVICE_PASSWORD
       BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: $BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
     image: amberlight303/blog-config:latest
-    restart: no
+    restart: always
     network_mode: host
     ports:
       - "9081:9081"
@@ -16,7 +127,7 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  discovery:
+  blog-discovery:
     environment:
       BLOG_CONFIG_SERVICE_USERNAME: $BLOG_CONFIG_SERVICE_USERNAME
       BLOG_CONFIG_SERVICE_PASSWORD: $BLOG_CONFIG_SERVICE_PASSWORD
@@ -26,7 +137,7 @@ services:
       BLOG_REDIS_PASSWORD: $BLOG_REDIS_PASSWORD
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
     image: amberlight303/blog-discovery:latest
-    restart: no
+    restart: always
     network_mode: host
     ports:
       - "9082:9082"
@@ -35,14 +146,14 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  gateway:
+  blog-gateway:
     environment:
       BLOG_CONFIG_SERVICE_USERNAME: $BLOG_CONFIG_SERVICE_USERNAME
       BLOG_CONFIG_SERVICE_PASSWORD: $BLOG_CONFIG_SERVICE_PASSWORD
       BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: $BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
       BLOG_MONGODB_HOST: $BLOG_MONGODB_HOST
       BLOG_MONGODB_PORT: $BLOG_MONGODB_PORT
-      BLOG_MONGODB_AUTHENTICATION_DATABASE: $BLOG_MONGODB_AUTHENTICATION_DATABASE
+#      BLOG_MONGODB_AUTHENTICATION_DATABASE: $BLOG_MONGODB_AUTHENTICATION_DATABASE
       BLOG_MONGODB_DATABASE: $BLOG_MONGODB_DATABASE
       BLOG_MONGODB_USERNAME: $BLOG_MONGODB_USERNAME
       BLOG_MONGODB_PASSWORD: $BLOG_MONGODB_PASSWORD
@@ -65,7 +176,7 @@ services:
       BLOG_REMEMBER_ME_SERVICE_KEY: $BLOG_REMEMBER_ME_SERVICE_KEY
       BLOG_GEO_IP_LIB_ENABLED: $BLOG_GEO_IP_LIB_ENABLED
     image: amberlight303/blog-gateway:latest
-    restart: no
+    restart: always
     network_mode: host
     ports:
       - "9080:9080"
@@ -74,14 +185,14 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  svc-post:
+  blog-svc-post:
     environment:
       BLOG_CONFIG_SERVICE_USERNAME: $BLOG_CONFIG_SERVICE_USERNAME
       BLOG_CONFIG_SERVICE_PASSWORD: $BLOG_CONFIG_SERVICE_PASSWORD
       BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: $BLOG_EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE
       BLOG_MONGODB_HOST: $BLOG_MONGODB_HOST
       BLOG_MONGODB_PORT: $BLOG_MONGODB_PORT
-      BLOG_MONGODB_AUTHENTICATION_DATABASE: $BLOG_MONGODB_AUTHENTICATION_DATABASE
+#      BLOG_MONGODB_AUTHENTICATION_DATABASE: $BLOG_MONGODB_AUTHENTICATION_DATABASE
       BLOG_MONGODB_DATABASE: $BLOG_MONGODB_DATABASE
       BLOG_MONGODB_USERNAME: $BLOG_MONGODB_USERNAME
       BLOG_MONGODB_PASSWORD: $BLOG_MONGODB_PASSWORD
@@ -100,7 +211,7 @@ services:
       BLOG_ELASTICSEARCH_CLUSTER_NODES: $BLOG_ELASTICSEARCH_CLUSTER_NODES
       BLOG_SPRING_CLOUD_CONFIG_URI: $BLOG_SPRING_CLOUD_CONFIG_URI
     image: amberlight303/blog-svc-post:latest
-    restart: no
+    restart: always
     network_mode: host
     ports:
       - "9083:9083"
@@ -108,87 +219,4 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-
-  blog-mongodb:
-    environment:
-      BLOG_MONGODB_PASSWORD: $BLOG_MONGODB_PASSWORD
-    image: amberlight303/blog-mongodb:latest
-    restart: no
-    network_mode: host
-    ports:
-      - "27017:27017"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  blog-redis:
-    environment:
-      BLOG_REDIS_PORT: $BLOG_REDIS_PORT
-    image: amberlight303/blog-redis:latest
-    restart: no
-    network_mode: host
-    ports:
-      - "6379:6379"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  blog-elasticsearch:
-    image: amberlight303/blog-elasticsearch:latest
-    restart: no
-    network_mode: host
-    ports:
-      - "9200:9200"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  blog-logstash:
-    image: amberlight303/blog-logstash:latest
-    restart: no
-    network_mode: host
-    ports:
-      - "9600:9600"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  blog-postgresql:
-    image: amberlight303/blog-postgresql:latest
-    environment:
-      POSTGRES_USER: $BLOG_POSTGRESQL_USERNAME
-      POSTGRES_PASSWORD: $BLOG_POSTGRESQL_PASSWORD
-      POSTGRES_DB: blog
-    restart: no
-    network_mode: host
-    ports:
-      - "5432:5432"
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:6.0.2
-    container_name: zookeeper
-    environment:
-      - ZOOKEEPER_CLIENT_PORT=2181
-    ports:
-      - 2181:2181
-
-  kafka:
-    image: confluentinc/cp-kafka:6.0.2
-    container_name: kafka
-    environment:
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
-      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-    ports:
-      - 9092:9092
-    links:
-      - zookeeper
 
