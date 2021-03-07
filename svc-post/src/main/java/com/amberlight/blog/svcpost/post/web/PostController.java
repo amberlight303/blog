@@ -42,7 +42,7 @@ public class PostController {
     public ResponseEntity<String> test() {
         logger.log(LogLevel.DIAG, new CustomMessage(1, "DIAG MESSAGE BEFORE EXCEPTION"));
 //        return ResponseEntity.ok("hello boi, this is a test!");
-        throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
+        throw new BusinessLogicException(1, "EXCEPTION TEXT 12:32");
     }
 
     @GetMapping("/posts/one-more-test")

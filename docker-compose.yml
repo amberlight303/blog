@@ -35,7 +35,7 @@ services:
     network_mode: host
     environment:
       - discovery.type=single-node
-      - cluster.name=elasticsearch
+#      - cluster.name=elasticsearch
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
@@ -49,6 +49,8 @@ services:
     image: amberlight303/blog-logstash:latest
     restart: always
     network_mode: host
+    environment:
+      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
     ports:
       - "9600:9600"
     logging:
@@ -60,8 +62,13 @@ services:
     image: amberlight303/blog-kibana:latest
     restart: always
     network_mode: host
+    environment:
+      - elasticsearch.url=http://127.0.0.1:9200
+      - elasticsearch.hosts=http://127.0.0.1:9200
     ports:
       - "5601:5601"
+    depends_on:
+      - blog-elasticsearch
     logging:
       options:
         max-size: "10m"
@@ -84,7 +91,7 @@ services:
 
   blog-zookeeper:
     image: confluentinc/cp-zookeeper:6.0.2
-    container_name: zookeeper
+    container_name: blog-zookeeper
     restart: always
     environment:
       - ZOOKEEPER_CLIENT_PORT=2181
@@ -98,15 +105,15 @@ services:
   blog-kafka:
     image: confluentinc/cp-kafka:6.0.2
     restart: always
-    container_name: kafka
+    container_name: blog-kafka
     environment:
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ZOOKEEPER_CONNECT=blog-zookeeper:2181
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
       - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
     ports:
       - "9092:9092"
     links:
-      - zookeeper
+      - blog-zookeeper
     logging:
       options:
         max-size: "10m"
