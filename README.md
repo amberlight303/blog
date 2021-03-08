@@ -93,6 +93,7 @@ ServerException. A developer can extend these exceptions and add new handling me
 handlers respond using JSON format.
 
 ### Features planned to implement further
+
 - Automatic deployment and initialization of all external technologies via Docker
 - Monitoring
 - Pagination
@@ -102,56 +103,31 @@ handlers respond using JSON format.
 
 ### Deployment
 
-Only core modules used in integration with Docker. All the external technologies (Redis, PostgreSQL, MongoDB, Kafka, 
-Elasticsearch, Logstash, Kibana) require a manual deployment and initialization approach for now. 
-
 Before deployment of the system, define and export environment variables listed in 
-[.env](https://github.com/amberlight303/blog/blob/master/.env). Initialization scripts for PostgreSQL are 
-[here](https://github.com/amberlight303/blog/blob/master/config/src/main/resources/database.sql). For MongoDB create 
-user, grant roles, create `blog` db , create `posts` collection. All Kafka topics the system creates automatically 
-while starting. For configuration and initialization of Elasticsearch, Kibana and Redis the system doesn't 
-require any specific actions.
+[.env](https://github.com/amberlight303/blog/blob/master/.env).
+Few containers are partially set to local use for now. The system requires a few gigs of space in RAM and the disk.
 
-Configuration for Logstash:
-<details>
-    <summary>logstash.conf</summary>
-<p>
-
+Make sure these ports are free on your machine:
 ```
-input {
-  kafka {
-    bootstrap_servers => "localhost:9092"
-    topics => ["gateway-log", "post-svc-log"]
-    codec => "json"
-    decorate_events => true
-  }
-}
-output {
-   if [@metadata][kafka][topic] == "gateway-log" {
-     elasticsearch {
-       hosts => ["localhost:9200"]
-       index => "gateway-log"
-       codec => "json"
-     }
-   } else if [@metadata][kafka][topic] == "post-svc-log" {
-      elasticsearch {
-        hosts => ["localhost:9200"]
-        index => "post-svc-log"
-        codec => "json"
-      }
-   }
-}
-
+9080 - Gateway
+9081 - Config
+9082 - Discovery
+9083 - Posts service
+2181 - Zookeper for Kafka
+9092 - Kafka
+9200 - Elasticsearch
+9600 - Logstash
+5601 - Kibana
+6379 - Redis
+5432 - PostgreSQL
+27017 - MongoDB
 ```
 
-</p>
-</details>
-
-After environment variables exported and after external technologies installed, configured and initialized, run:
+After environment variables are exported and after external are technologies installed, configured and initialized, run:
 ```
 docker-compose -f docker-compose.yml up -d
 ```
-After the system started, it will take requests on default port `9080`. Predefined user with the role `ADMIN` has 
+When the system starts, it takes requests on default port `9080`. Predefined user with the role `ADMIN` has 
 username `someTestUser@gmail.com` and password `password`.
 
 ### A few screenshots: 

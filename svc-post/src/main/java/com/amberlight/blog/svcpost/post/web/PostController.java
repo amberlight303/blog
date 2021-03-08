@@ -11,7 +11,6 @@ import com.amberlight.blog.svcpost.post.service.IAuthenticationFacade;
 import com.amberlight.blog.svcpost.post.service.PostElasticService;
 import com.amberlight.blog.svcpost.post.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,6 @@ public class PostController {
     private static final Logger logger = LogManager.getLogger(PostController.class);
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private IAuthenticationFacade authFacade;
 
     @Autowired
@@ -41,7 +37,6 @@ public class PostController {
     @GetMapping("/posts/test")
     public ResponseEntity<String> test() {
         logger.log(LogLevel.DIAG, new CustomMessage(1, "DIAG MESSAGE BEFORE EXCEPTION"));
-//        return ResponseEntity.ok("hello boi, this is a test!");
         throw new BusinessLogicException(1, "EXCEPTION TEXT 12:32");
     }
 
@@ -49,7 +44,6 @@ public class PostController {
     public ResponseEntity<String> oneMoreTest() {
         logger.log(LogLevel.DIAG, new CustomMessage(1, "IT IS A NEW DIAG MESSAGE!"));
         return ResponseEntity.ok("one more test message");
-//        throw new BusinessLogicException(1, "SOME BUSINESS LOGIC EXCEPTION TEXT");
     }
 
     @GetMapping("/posts")

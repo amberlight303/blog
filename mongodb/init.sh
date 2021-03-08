@@ -1,4 +1,15 @@
 #!/bin/bash
+
+if test -z "$BLOG_MONGODB_USERNAME"; then
+    echo "BLOG_MONGODB_USERNAME not defined"
+    exit 1
+fi
+
+if test -z "$BLOG_MONGODB_DATABASE"; then
+    echo "BLOG_MONGODB_DATABASE not defined"
+    exit 1
+fi
+
 if test -z "$BLOG_MONGODB_PASSWORD"; then
     echo "BLOG_MONGODB_PASSWORD not defined"
     exit 1

@@ -16,7 +16,6 @@ spring:
       port: ${BLOG_MONGODB_PORT}
       username: ${BLOG_MONGODB_USERNAME}
       password: ${BLOG_MONGODB_PASSWORD}
-#      authentication-database: ${BLOG_MONGODB_AUTHENTICATION_DATABASE}
       database: ${BLOG_MONGODB_DATABASE}
     elasticsearch:
       cluster-name: ${BLOG_ELASTICSEARCH_CLUSTER_NAME}
