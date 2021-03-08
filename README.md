@@ -122,7 +122,7 @@ Make sure these ports are free on your machine:
 27017 - MongoDB
 ```
 
-After environment variables are exported and after external are technologies installed, configured and initialized, run:
+After environment variables are exported and after external technologies are installed, configured and initialized, run:
 ```
 docker-compose -f docker-compose.yml up -d
 ```
