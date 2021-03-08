@@ -126,7 +126,7 @@ After environment variables are exported and after external technologies are ins
 ```
 docker-compose -f docker-compose.yml up -d
 ```
-When the system starts, it takes requests on default port `9080`. Predefined user with the role `ADMIN` has 
+When the system starts, it takes requests on the default port `9080`. Predefined user with the role `ADMIN` has 
 username `someTestUser@gmail.com` and password `password`.
 
 ### A few screenshots: 
