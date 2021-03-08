@@ -94,7 +94,6 @@ handlers respond using JSON format.
 
 ### Features planned to implement further
 
-- Automatic deployment and initialization of all external technologies via Docker
 - Monitoring
 - Pagination
 - Search results highlighting
